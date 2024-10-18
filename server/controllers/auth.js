@@ -7,7 +7,6 @@ export const showMessage = (req, res) =>{
 
 export const register = async (req, res) =>{
     const {name, email, password} = req.body;
-    console.log('hey');
     //validation
     if (!name){
         return res.status(400).send('Name is required');
@@ -34,7 +33,6 @@ export const register = async (req, res) =>{
         }catch (error){
             console.log('USER REGISTERATION FAILED', error);
             return res.status(400).send('Error. Try again.');
-
         }
     }
 };
