@@ -1,3 +1,4 @@
+import React from "react";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import {Link} from 'react-router-dom';

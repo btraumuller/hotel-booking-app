@@ -1,3 +1,4 @@
+import React from "react";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import axios from "axios";
@@ -9,7 +10,7 @@ import {toast} from 'react-toastify';
 
 function DashboardSeller(){
 
-    const {auth} = useSelector((state) => ({...state}));
+    const {auth} = useSelector((state:any) => ({...state}));
     const [loading, setLoading] = useState(false);
     let connectedUser = auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled? true : false;
     

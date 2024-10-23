@@ -2,13 +2,13 @@ import {useState} from "react";
 import RegisterForm from "../components/RegisterForm";
 import {toast} from "react-toastify";
 import { register } from "../actions/auth";
-function Register({history}) {
+function Register({history}:any) {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = async (e) =>{
+    const handleSubmit = async (e: { preventDefault: () => void; }) =>{
       e.preventDefault();
 
       try{
@@ -24,7 +24,7 @@ function Register({history}) {
         //   })
         // });
 
-        const response = await register({
+        const response:any = await register({
           name,
           email,
           password
@@ -33,7 +33,7 @@ function Register({history}) {
         console.log("RESPONSE REGISTER", response.json());
         toast.success("Register successful. Please login");
         history.push("/login");
-      }catch (err){
+      }catch (err:any){
         if (err.response.status === 400){
           toast.error(err.response.data);
         }

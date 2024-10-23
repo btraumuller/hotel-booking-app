@@ -1,5 +1,12 @@
+type loginProps = {
+    email: string,
+    setEmail: (email:string) => void,
+    password: string,
+    setPassword: (password:string) => void,
+    handleSubmit: (e:any) => void
+}
 
-function LoginForm({handleSubmit, email, setEmail, password, setPassword}){
+function LoginForm({handleSubmit, email, setEmail, password, setPassword}:loginProps){
     
     return(
         <form onSubmit={handleSubmit} className="mt-3">

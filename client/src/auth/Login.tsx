@@ -5,11 +5,11 @@ import {useState} from "react";
 import LoginForm from "../components/LoginForm";
 import {useDispatch} from "react-redux";
 
-function Login({history}) {
+function Login({history}:any) {
   const [email, setEmail] = useState("btraumuller@gmail.com");
   const [password, setPassword] = useState("Dragons1988");
     const dispatch = useDispatch();
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       try{
 
@@ -32,7 +32,7 @@ function Login({history}) {
             history.push('/');
         }
         return res;
-      }catch (err){
+      }catch (err:any){
         console.log(err);
         if (err.response.status === 400){
           toast.error(err.response.data);

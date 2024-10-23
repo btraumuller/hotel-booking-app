@@ -1,5 +1,15 @@
 
-function RegisterForm({handleSubmit, name, setName, email, setEmail, password, setPassword}){
+type registerProps = {
+    name: string,
+    setName: (name:string) => void,
+    email: string,
+    setEmail: (email:string) => void,
+    password: string,
+    setPassword: (password:string) => void,
+    handleSubmit: (e:any) => void
+}
+
+function RegisterForm({handleSubmit, name, setName, email, setEmail, password, setPassword}:registerProps){
     
     return(
         <form onSubmit={handleSubmit} className="mt-3">

@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 const TopNav = () => {
-  const {auth} = useSelector((state) => ({...state}));
+  const {auth} = useSelector((state:any) => ({...state}));
   const dispatch = useDispatch();
   const logout = () =>{
     dispatch({

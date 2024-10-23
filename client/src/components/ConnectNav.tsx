@@ -1,14 +1,16 @@
 import { useSelector } from "react-redux";
 import {Card, Avatar} from "antd";
+
+
 function ConnectNav() {
-    const {auth} = useSelector((state) => ({...state}));
+    const {auth} = useSelector((state:any) => ({...state}));
     const {user} = auth;
     const compareDays = () => {
 
-        let today = new Date();
-        let createdAt = new Date(user.createdAt);
-        const diff = today - createdAt;
-        const days = diff/(1000*60*60*24);
+        let today:any = new Date();
+        let createdAt:any = new Date(user.createdAt);
+        const diff:any = today - createdAt;
+        const days:number = diff/(1000*60*60*24);
     
         return Math.round(days) > 1 ? `${Math.round(days)} days` : `${Math.round(days)} day`;
     } 
