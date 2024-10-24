@@ -1,3 +1,4 @@
+import React from "react";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 
@@ -11,7 +12,7 @@ import Register from "./auth/Register";
 import TopNav from "./components/TopNav";
 import Dashboard from "./user/Dashboard";
 import DashboardSeller from "./user/DashboardSeller";
-
+import StripeCallback from "./stripe/StripeCallback";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -28,6 +29,7 @@ function App() {
           <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
           <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
           <PrivateRoute exact path="/hotels/new" component={NewHotel} />
+          <PrivateRoute exact path="/stripe/callback" component={StripeCallback} />
         </Switch>
     </BrowserRouter>
   );
