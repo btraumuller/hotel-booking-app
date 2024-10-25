@@ -34,3 +34,54 @@ export const createConnectAccount = async (req, res) => {
     res.send(`${accountLink.url}?${queryString.stringify(accountLink)}`);
     console.log("ACCOUNT LINK", accountLink);
 }
+
+const updateDelayDays = async (accountId) => {
+    const account = await stripe.accounts.update(accountId, {
+        settings: {
+            payouts: {
+                schedule: {
+                    delay_days: 7,
+                },
+            },
+        },
+    });
+
+    return account;
+}
+
+export const getAccountStatus = async (req, res) => {
+    console.log("GET ACCOUNT STATUS");
+    const user = await User.findById(req.auth._id).exec();
+    const account = await stripe.accounts.retrieve(user.stripe_account_id);
+    //update delay days
+    const updatedAccount = await updateDelayDays(account.id);
+    //update account and send everything except password
+    const updatedUser = await User.findByIdAndUpdate(
+        user._id,
+        {
+            stripe_seller: updatedAccount,
+        },
+        { new: true } //make sure this account is updated immediately
+    ).select("-password").exec();
+
+    res.json(updatedUser);
+}
+
+export const getAccountBalance = async (req, res) => {
+    const balance = await stripe.balance.retrieve({
+        stripeAccount: req.body.accountId,
+    });
+    res.json(balance);
+}
+
+export const getPayoutSetting = async (req, res) => {
+    try{
+        const user = await User.findById(req.auth._id).exec();
+        const loginLink = await stripe.accounts.createLoginLink(user.stripe_account_id,{
+            redirect_url: process.env.STRIPE_SETTING_REDIRECT_URL,
+        });
+        res.json(loginLink);
+    }catch(error){
+        console.log('Payout setting error',error);
+    }
+}

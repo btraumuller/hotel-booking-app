@@ -1,8 +1,8 @@
 import {LoadingOutlined} from '@ant-design/icons';
-
+import axios from 'axios';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAccountStatus } from '../actions/stripe';
+import { updateUserInLocalStorage } from '../actions/auth';
 
 const StripeCallback = ({history}:any) => {
     const {auth} = useSelector((state:any) => ({...state}));
@@ -13,8 +13,21 @@ const StripeCallback = ({history}:any) => {
         const accountStatus = async () => {
             
             try {
-                const res = await getAccountStatus(auth.token);
-                console.log("USER ACCOUNT STATUS ON STRIPE CALLBACK",res);
+                const res = await axios.post(`${process.env.REACT_APP_Server_API}/get-account-status`, {}, {
+                    headers:{
+                        Authorization: `Bearer ${auth.token}`
+                    }
+                });
+
+                //console.log("USER ACCOUNT STATUS ON STRIPE CALLBACK",res);
+                updateUserInLocalStorage(res.data, ()=>{
+                    dispatch({
+                        type: "LOGGED_IN_USER",
+                        payload: res.data
+                    });
+                    window.localStorage.setItem('user', JSON.stringify(res.data));
+                    history.push('/dashboard/sellers');
+                });
 
             } catch (error) {
                 console.log(error);
