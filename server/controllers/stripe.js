@@ -74,10 +74,10 @@ export const getAccountBalance = async (req, res) => {
     res.json(balance);
 }
 
-export const getPayoutSetting = async (req, res) => {
+export const payoutSetting = async (req, res) => {
     try{
         const user = await User.findById(req.auth._id).exec();
-        const loginLink = await stripe.accounts.createLoginLink(user.stripe_account_id,{
+        const loginLink = await stripe.accounts.createLoginLink(user.stripe_seller.id,{
             redirect_url: process.env.STRIPE_SETTING_REDIRECT_URL,
         });
         res.json(loginLink);

@@ -39,6 +39,7 @@ function ConnectNav() {
             setLoading(false);
         }
     }
+    
     useEffect(() => {
 
         const getAccountBalance = async () => {
