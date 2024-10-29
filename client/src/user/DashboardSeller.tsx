@@ -3,15 +3,17 @@ import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import axios from "axios";
 import {Link} from 'react-router-dom';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {HomeOutlined} from '@ant-design/icons'
 import {toast} from 'react-toastify';
+import SmallCard from "../components/SmallCard";
 
 function DashboardSeller(){
 
     const {auth} = useSelector((state:any) => ({...state}));
     const [loading, setLoading] = useState(false);
+    const [hotels, setHotels] = useState([]);
     let connectedUser = auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled? true : false;
     
     const handleClick = async () => {
@@ -33,6 +35,24 @@ function DashboardSeller(){
         }         
     }
 
+    useEffect(() => {
+        const loadSellers = async () => {
+            try{
+                let res = await axios.get(`${process.env.REACT_APP_Server_API}/seller-hotels`, {
+                    headers:{
+                        Authorization: `Bearer ${auth.token}`
+                    }
+                });
+                setHotels(res.data);
+            }catch(error){
+                console.log(error);
+            }
+        }
+        
+        loadSellers();
+
+    }, [auth.token]);
+    
     return (
         <>
             <div className="container-fluid text-center p-5 bg-secondary">
@@ -52,7 +72,11 @@ function DashboardSeller(){
                                 <Link to="/hotels/new" className="btn btn-primary">Add New Hotel</Link>
                             </div>
                         </div>
-                        <p>Dashboard Page</p>
+                        <div className="row">
+                            {
+                                hotels.map((h:any) => (<SmallCard key={h._id} h={h} handleHotelDelete={()=> console.log('test')} showViewMoreButton={false} owner={true} />))
+                            }
+                        </div>
                     </div>
                 ):(
                     <div className="container-fluid">

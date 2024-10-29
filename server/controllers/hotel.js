@@ -47,6 +47,8 @@ export const addHotel = async (req, res) => {
         try{
             
             const hotel = new Hotel(fields);
+            hotel.postedBy = req.user._id;
+            
             if(files.image){
                 hotel.image.data = fs.readFileSync(files.image.path);
                 hotel.image.contentType = files.image.type;
@@ -65,4 +67,32 @@ export const addHotel = async (req, res) => {
             res.status(400).send('Hotel create failed. Try again.');
         }
     }  
+
+    
+}
+
+export const getHotels = async (req, res) => {
+    try{
+        let all = await Hotel.find({}).limit(24).select("-image.data").populate('postedBy', '_id name').exec();
+        res.json(all);
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
+
+export const image = async (req, res) => {
+
+    let hotel = await Hotel.findById(req.params.hotelId).exec();
+    
+    if(hotel && hotel.image && hotel.image.data !== null){
+        res.set('Content-Type', hotel.image.contentType);
+        return res.send(hotel.image.data);
+    }
+}
+
+export const getSellerHotels = async (req, res) => {
+    let all = await Hotel.find({postedBy: req.user._id}).select("-image.data").populate('postedBy', '_id name').exec();
+    res.send(all);
 }

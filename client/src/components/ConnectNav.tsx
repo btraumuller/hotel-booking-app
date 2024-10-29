@@ -5,7 +5,7 @@ import {toast} from "react-toastify";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { currencyFormatter } from "../actions/stripe";
-
+import { diffDays } from "../actions/hotel";
 const {Ribbon} = Badge;
 
 function ConnectNav() {
@@ -13,15 +13,6 @@ function ConnectNav() {
     const [loading, setLoading] = useState(false);
     const {auth} = useSelector((state:any) => ({...state}));
     const {user} = auth;
-    const compareDays = () => {
-
-        let today:any = new Date();
-        let createdAt:any = new Date(user.createdAt);
-        const diff:number = today - createdAt;
-        const days:number = diff/(1000*60*60*24);
-    
-        return Math.round(days) > 1 ? `${Math.round(days)} days` : `${Math.round(days)} day`;
-    }
 
     const handlePayoutSettings = async () => {
         setLoading(true);
@@ -39,7 +30,7 @@ function ConnectNav() {
             setLoading(false);
         }
     }
-    
+
     useEffect(() => {
 
         const getAccountBalance = async () => {
@@ -63,7 +54,7 @@ function ConnectNav() {
         <>
         <div className="d-flex justify-content-around">
             <Card>
-                <Card.Meta title={user.name} description={`Joined ${(compareDays())} ago`} avatar={<Avatar>{user.name[0]}</Avatar>} />
+                <Card.Meta title={user.name} description={`Joined ${(diffDays(new Date(), new Date(user.createdAt)))} ago`} avatar={<Avatar>{user.name[0]}</Avatar>} />
             </Card>
         </div>
         {auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled && 
