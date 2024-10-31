@@ -35,6 +35,23 @@ function DashboardSeller(){
         }         
     }
 
+    const handleHotelDelete = async (hotelId:string) => {
+        
+        if (!window.confirm('Are you sure you want to delete this hotel?')) return;
+
+        await axios.delete(`${process.env.REACT_APP_Server_API}/delete-hotel/${hotelId}`, {
+            headers:{
+                Authorization: `Bearer ${auth.token}`
+            }
+        }).then((res) => {
+            toast.success('Hotel Deleted');
+            setHotels(res.data);
+        }).catch((error) => {
+            console.log(error);
+            toast.error('Hotel Delete Failed');
+        });
+    }
+
     useEffect(() => {
         const loadSellers = async () => {
             try{
@@ -74,7 +91,7 @@ function DashboardSeller(){
                         </div>
                         <div className="row">
                             {
-                                hotels.map((h:any) => (<SmallCard key={h._id} h={h} handleHotelDelete={()=> console.log('test')} showViewMoreButton={false} owner={true} />))
+                                hotels.map((h:any) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={true} />))
                             }
                         </div>
                     </div>
