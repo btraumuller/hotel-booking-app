@@ -12,19 +12,21 @@ const TopNav = () => {
     window.localStorage.removeItem("auth");
   }
   return(
-    <div className="nav bg-light d-flex justify-content-between">
-      <Link className="nav-link" to="/">Home</Link>
-      {!auth && (
-        <>
-          <Link className="nav-link" to="/login">Login</Link>
-          <Link className="nav-link" to="/register">Register</Link>
-        </>
-      )}
-      {auth &&(
-        <>
-          <Link className="nav-link" onClick={logout} to="/login">Logout</Link>
-        </>
-      )}
+    <div className="bg-light">
+      <div className="nav container-xxl bg-light d-flex justify-content-between">
+        <Link className="nav-link" to="/">Home</Link>
+          {!auth ?(
+              <>
+                <Link className="nav-link" to="/login">Login</Link>
+                <Link className="nav-link" to="/register">Register</Link>
+              </>
+            ):(
+              <>
+                <Link className="nav-link" onClick={logout} to="/login">Logout</Link>
+              </>
+            )
+          }
+      </div>
     </div>
   )
 };

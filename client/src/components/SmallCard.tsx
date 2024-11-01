@@ -7,7 +7,7 @@ export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDel
     return(
         <div className="card mb-3">
             <div className="row no-gutters">
-                <div className="col-md-4">
+                <div className="col-md-4 p-0">
                     {h.image && h.image.contentType ? (
                         <img 
                             src={`${process.env.REACT_APP_Server_API}/hotel/image/${h._id}`}

@@ -8,19 +8,21 @@ function Dashboard(){
             <div className="container-fluid p-5 text-center bg-secondary">
                 <ConnectNav />  
             </div>
-            <div className="container-fluid p-4">
-                <DasboardNav />
-            </div>
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-10">
-                        <h2>Your Bookings</h2>
-                    </div>
-                    <div className="col-md-2">
-                        <Link to="/" className="btn btn-primary">Browse Hotels</Link>
-                    </div>
+            <div className="container-xxl">
+                <div className="container-fluid p-4">
+                    <DasboardNav />
                 </div>
-                <p>Dashboard Page</p>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-10">
+                            <h2>Your Bookings</h2>
+                        </div>
+                        <div className="col-md-2">
+                            <Link to="/" className="btn btn-primary">Browse Hotels</Link>
+                        </div>
+                    </div>
+                    <p>Dashboard Page</p>
+                </div>
             </div>
         </>
     )

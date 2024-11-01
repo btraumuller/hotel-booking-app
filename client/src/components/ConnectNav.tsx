@@ -51,16 +51,15 @@ function ConnectNav() {
     }, [auth.token]);
     
     return (
-        <>
-        <div className="d-flex justify-content-around">
+        <div className="d-flex container-xxl justify-content-around">
             <Card>
                 <Card.Meta title={user.name} description={`Joined ${(diffDays(new Date(), new Date(user.createdAt)))} ago`} avatar={<Avatar>{user.name[0]}</Avatar>} />
             </Card>
-        </div>
+        
         {auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled && 
             <>
-                <Ribbon text="Available" color="grey">
-                    <Card>
+                <Ribbon text="Available" color="grey" className="d-flex">
+                    <Card className="p-2">
                         {balance && balance.pending && 
                             
                             balance.pending.map((ba,i) =>{
@@ -71,12 +70,14 @@ function ConnectNav() {
                         }
                     </Card>
                 </Ribbon>
-                <Ribbon text="Payouts" color="silver" className="bg-light pointer">
-                    <SettingOutlined disabled={loading} onClick={handlePayoutSettings} className="h5 pt-2" />
+                <Ribbon text="Payout Settings" color="silver" className="pointer d-flex">
+                    <Card className="p-2">
+                        <SettingOutlined disabled={loading} onClick={handlePayoutSettings} className="h4 pt-3" />
+                    </Card>
                 </Ribbon>
             </>
         }
-        </>
+        </div>
     )
 }
 export default ConnectNav;

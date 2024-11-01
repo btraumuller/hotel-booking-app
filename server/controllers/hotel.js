@@ -12,7 +12,8 @@ export const addHotel = async (req, res) => {
     let bed = fields.bed;
     let to = fields.to;
     let from = fields.from;
-
+    let user = req.auth;
+    console.log(req);
     if(!title){
         return res.status(400).send('Title is required');
     }
@@ -47,7 +48,7 @@ export const addHotel = async (req, res) => {
         try{
             
             const hotel = new Hotel(fields);
-            hotel.postedBy = req.user._id;
+            hotel.postedBy = req.auth._id;
             
             if(files.image){
                 hotel.image.data = fs.readFileSync(files.image.path);
@@ -62,7 +63,7 @@ export const addHotel = async (req, res) => {
                 return res.json(result);
             });
 
-        }catch{
+        }catch (error){
             console.log('HOTEL CREATE ERROR', error);
             res.status(400).send('Hotel create failed. Try again.');
         }
@@ -93,6 +94,11 @@ export const image = async (req, res) => {
 }
 
 export const getSellerHotels = async (req, res) => {
-    let all = await Hotel.find({postedBy: req.user._id}).select("-image.data").populate('postedBy', '_id name').exec();
+    let all = await Hotel.find({postedBy: req.auth._id}).select("-image.data").populate('postedBy', '_id name').exec();
     res.send(all);
+}
+
+export const deleteHotel = async (req, res) => {
+    let removed = await Hotel.findByIdAndDelete(req.params.hotelId).select("-image.data").exec();
+    res.json(removed);
 }
