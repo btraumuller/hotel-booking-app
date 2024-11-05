@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { addHotel } from "../actions/hotel";
 import { useSelector } from "react-redux";
-import HotelForm from "../components/forms/AddHotelForm";
+import HotelForm from "../components/forms/HotelForm";
 
 function NewHotel(){
     const [values, setValues] = useState({

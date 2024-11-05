@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import {toast} from 'react-toastify';
 import { useSelector } from 'react-redux';
-import HotelForm from "../components/forms/AddHotelForm";
+import HotelForm from "../components/forms/HotelForm";
 import axios from 'axios';
 
 
@@ -62,7 +62,7 @@ export default function EditHotel({match}:any){
     const handleChange = (e: { target: { name: string; value: string; }; }) => {
         setValues({...values, [e.target.name]: e.target.value});    
     }
-    
+
     let init: React.MutableRefObject<boolean> = useRef(true);
 
     useEffect(() => {
@@ -80,7 +80,7 @@ export default function EditHotel({match}:any){
 
     return(
         <>
-            <div className="container-xxl bg-secondary p-5 text-center">
+            <div className="container-fluid bg-secondary p-5 text-center">
                 <h2>Edit Hotel</h2>
             </div>
             <div className="container-xxl">

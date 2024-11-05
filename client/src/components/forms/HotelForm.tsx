@@ -20,8 +20,6 @@ type hotelFormType = {
 export function hotelForm({handleSubmit, handleChange, handleImageChange, values, setValues}:hotelFormType) {
     
     const {title, content, price, location, bed, to, from} = values;
-    let defaultFrom = from ? moment(from, "YYYY-MM-DD") : "";
-    let defaultTo = to ? moment(to, "YYYY-MM-DD") : "";
     
     return(
         <form onSubmit={handleSubmit}>
@@ -75,25 +73,49 @@ export function hotelForm({handleSubmit, handleChange, handleImageChange, values
                     <Option key="3">3</Option>
                     <Option key="4">4</Option>
                 </Select>
-
-                <DatePicker 
+                
+                { from ? (
+                    <DatePicker 
                     placeholder="From date" 
                     className="form-control mt-4"
                     format={"DD-MM-YYYY"} 
                     onChange={(date,dateString) => setValues({...values, from: dateString.toLocaleString()})} 
                     disabledDate={(current) => current && current.valueOf() < Date.now() - 86400000}
-                    defaultValue={defaultFrom}
+                    defaultValue={moment(from, "YYYY-MM-DD")}
+                    /> 
+                ):(
+                    <DatePicker 
+                    placeholder="From date" 
+                    className="form-control mt-4"
+                    format={"DD-MM-YYYY"} 
+                    onChange={(date,dateString) => setValues({...values, from: dateString.toLocaleString()})} 
+                    disabledDate={(current) => current && current.valueOf() < Date.now() - 86400000}
                     />
-              
-                <DatePicker 
+                )
+                    
+                }
+                
+                {to ? (
+                    <DatePicker 
                     placeholder="To date" 
                     className="form-control mt-4" 
                     onChange={(date,dateString) => setValues({...values, to: dateString.toLocaleString()})}
                     disabledDate={(current) => current && current.valueOf() < Date.now() - 86400000}
-                    defaultValue={defaultTo}
+                    defaultValue={moment(to, "YYYY-MM-DD")}
                     />
+                ):(
+                    <DatePicker 
+                    placeholder="To date" 
+                    className="form-control mt-4" 
+                    onChange={(date,dateString) => setValues({...values, to: dateString.toLocaleString()})}
+                    disabledDate={(current) => current && current.valueOf() < Date.now() - 86400000}
+                    />
+                )
+                    
+                }
                 
-                <button className="btn btn-outline-primary m-2">Save</button>
+                
+                <button className="btn btn-outline-primary mt-4">Save</button>
             </div>
     </form>
     )
