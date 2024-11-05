@@ -30,3 +30,23 @@ export const diffDays = (from: Date, to: Date) => {
 
     return difference > 1 ? `${difference} days` : `${difference} day`;
 }
+
+export const deleteHotel = async (token:any, hotelId:string) => {
+    await axios.delete(`${process.env.REACT_APP_Server_API}/delete-hotel/${hotelId}`, {
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
+export const getHotel = async (hotelId:string) => {
+    await axios.get(`${process.env.REACT_APP_Server_API}/hotel/${hotelId}`);
+}
+
+export const updateHotel = async (token:any, hotel:any) => {
+    await axios.post(`${process.env.REACT_APP_Server_API}/update-hotel`, hotel, {
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    });
+}

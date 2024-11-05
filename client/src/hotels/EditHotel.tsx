@@ -1,28 +1,28 @@
-
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { addHotel } from "../actions/hotel";
-import { useSelector } from "react-redux";
+import {useState, useEffect, useRef} from 'react';
+import {toast} from 'react-toastify';
+import { useSelector } from 'react-redux';
 import HotelForm from "../components/forms/AddHotelForm";
+import axios from 'axios';
 
-function NewHotel(){
+
+export default function EditHotel({match}:any){
+    const {auth} = useSelector((state:any) => ({...state}));
     const [values, setValues] = useState({
         title: "",
         content: "",
         location: "",
-        image: "",
         price: "",
         from: "",
         to: "",
         bed: ""
     });
 
+    const [image, setImage] = useState('');
+
     const [preview, setPreview]=  useState('https://via.placeholder.com/100x100.png?text=PREVIEW');
 
-    const {title, content, image, location, price} = values;
-    
-    const {auth} = useSelector((state:any) => ({...state}));
-    
+    const {title, content, location, price} = values;
+
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
@@ -37,10 +37,13 @@ function NewHotel(){
         hotelData.append("to", values.to);
 
         try{
-            let res = await addHotel(auth.token, hotelData);
-            console.log('HOTEL CREATE RES',res);
-            toast.success('New hotel is posted');
-            document.querySelector('form')?.reset();
+            let res = await axios.post(`${process.env.REACT_APP_Server_API}/update-hotel/${match.params.hotelid}`, hotelData, {
+                headers:{
+                    Authorization: `Bearer ${auth.token}`
+                }
+            });
+            console.log('HOTEL UPDATE RES',res);
+            toast.success(`${res.data.title} is updated`);
         }catch(error:any){
             console.log(error);
             toast.error(error.response.data);
@@ -50,7 +53,7 @@ function NewHotel(){
 
     const handleImageChange = (e: { target: { files: any[string]; }; }) => {
         const file = e.target.files ? e.target.files[0] : null;
-        setValues({...values, image: file});
+        setImage(e.target.files[0]);
         //setPreview is a function that takes a URL.createObjectURL(file) as an argument and generates a preview of the image.
         //createObjectURL() method creates a DOMString containing a URL representing the object given in the parameter.
         setPreview(URL.createObjectURL(file));
@@ -59,17 +62,31 @@ function NewHotel(){
     const handleChange = (e: { target: { name: string; value: string; }; }) => {
         setValues({...values, [e.target.name]: e.target.value});    
     }
-
     
-    return (
+    let init: React.MutableRefObject<boolean> = useRef(true);
+
+    useEffect(() => {
+        if (init.current){
+            const loadSellerHotels = async () => {
+                let res = await axios.get(`${process.env.REACT_APP_Server_API}/hotel/${match.params.hotelid}`);
+                setValues({...values, ...res.data});
+                setPreview(`${process.env.REACT_APP_Server_API}/hotel/image/${match.params.hotelid}`);
+            }
+            loadSellerHotels();
+            init.current = false;
+        }
+
+    }, [match.params.hotelid, values]);
+
+    return(
         <>
-            <div className="container-fluid bg-secondary p-5 text-center">
-                <h1>Add Hotel</h1>
+            <div className="container-xxl bg-secondary p-5 text-center">
+                <h2>Edit Hotel</h2>
             </div>
-            <div className="container-xl">
+            <div className="container-xxl">
                 <div className="row">
                     <div className="col-md-10">
-                        <HotelForm 
+                    <HotelForm 
                             handleChange={handleChange}
                             handleImageChange={handleImageChange}
                             handleSubmit={handleSubmit}
@@ -79,14 +96,12 @@ function NewHotel(){
                     <div className="col-md-2">
                         <img 
                             src={preview} 
-                            alt="preview_image" 
+                            alt="Preview" 
                             className="img img-fluid m-2" />
-                        <pre>{JSON.stringify(values)}</pre>
+                        <pre>{JSON.stringify(values, null, 4)}</pre>
                     </div>
                 </div>
             </div>
         </>
-    );
+    )
 }
-
-export default NewHotel;

@@ -1,6 +1,6 @@
 import { DatePicker, Select } from 'antd';
+import moment from 'moment';
 const {Option} = Select;
-
 type hotelFormType = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -19,7 +19,10 @@ type hotelFormType = {
 
 export function hotelForm({handleSubmit, handleChange, handleImageChange, values, setValues}:hotelFormType) {
     
-    const {title, content, price, location} = values;
+    const {title, content, price, location, bed, to, from} = values;
+    let defaultFrom = from ? moment(from, "YYYY-MM-DD") : "";
+    let defaultTo = to ? moment(to, "YYYY-MM-DD") : "";
+    
     return(
         <form onSubmit={handleSubmit}>
             <div className="form-group mb-3">
@@ -40,19 +43,22 @@ export function hotelForm({handleSubmit, handleChange, handleImageChange, values
                     className="form-control" 
                     value={title} 
                     onChange={handleChange} />
-                <label htmlFor="location" className="form-label">Location</label>
+                    
+                <label htmlFor="location" className="form-label mt-2">Location</label>
                 <input  
                     type="text" 
                     name="location" 
                     className="form-control" 
                     value={location} 
                     onChange={handleChange} />
+
                 <label htmlFor="content" className="form-label mt-2">Content</label>
                 <textarea 
                     name="content" 
                     className="form-control" 
                     value={content} 
                     onChange={handleChange} />
+
                 <label htmlFor="price" className="form-label mt-2">Price</label>
                 <input  
                     type="number" 
@@ -61,26 +67,32 @@ export function hotelForm({handleSubmit, handleChange, handleImageChange, values
                     placeholder="price"
                     value={price} 
                     onChange={handleChange} />
+
                 <label htmlFor="bed" className="form-label mt-2">Bed</label>
-                <Select onChange={(value) => setValues({...values, bed:value})} className="w-100" size="large">
+                <Select onChange={(value) => setValues({...values, bed:value})} className="w-100" size="large" value={bed}>
                     <Option key="1">1</Option>
                     <Option key="2">2</Option>
                     <Option key="3">3</Option>
                     <Option key="4">4</Option>
                 </Select>
-                
+
                 <DatePicker 
                     placeholder="From date" 
-                    className="form-control mt-4" 
+                    className="form-control mt-4"
+                    format={"DD-MM-YYYY"} 
                     onChange={(date,dateString) => setValues({...values, from: dateString.toLocaleString()})} 
                     disabledDate={(current) => current && current.valueOf() < Date.now() - 86400000}
+                    defaultValue={defaultFrom}
                     />
+              
                 <DatePicker 
                     placeholder="To date" 
                     className="form-control mt-4" 
                     onChange={(date,dateString) => setValues({...values, to: dateString.toLocaleString()})}
                     disabledDate={(current) => current && current.valueOf() < Date.now() - 86400000}
+                    defaultValue={defaultTo}
                     />
+                
                 <button className="btn btn-outline-primary m-2">Save</button>
             </div>
     </form>

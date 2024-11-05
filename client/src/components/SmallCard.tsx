@@ -48,7 +48,7 @@ export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDel
                             )}
                             {owner && (
                                 <>
-                                    <Link to={`/hotel/edit/${h._id}`}>
+                                    <Link to={`/hotels/edit/${h._id}`}>
                                         <EditOutlined className="text-warning" />
                                     </Link>
                                     <DeleteOutlined onClick={() => handleHotelDelete(h._id)} className="text-danger" />

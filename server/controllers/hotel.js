@@ -102,3 +102,33 @@ export const deleteHotel = async (req, res) => {
     let removed = await Hotel.findByIdAndDelete(req.params.hotelId).select("-image.data").exec();
     res.json(removed);
 }
+
+export const getHotel = async (req, res) => {
+
+    let hotel = await Hotel.findById(req.params.hotelId).select("-image.data").exec();
+    res.json(hotel);
+}
+
+export const updateHotel = async (req, res) => {
+    try{
+        let fields = req.fields;
+        let files = req.files;
+
+        let data = { ...fields, ...files};
+        if (files.image){
+            let image = {};
+            image.data = fs.readFileSync(files.image.path);
+            image.contentType = files.image.type;
+            data.image = image;
+        }
+
+        let updated = await Hotel.findByIdAndUpdate(req.params.hotelId, data, {new: true}).select("-image.data").exec();
+        
+        res.json(updated);
+
+    }
+    catch(err){
+        console.log(err);
+        res.sendStatus(400);
+    }
+}
