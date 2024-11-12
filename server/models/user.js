@@ -23,7 +23,7 @@ const userSchema = new Schema({
     },
     stripe_account_id: '',
     stripe_seller:{},
-    stripe_Session:{}
+    stripeSession:{}
 
 }, {timestamps: true});
 

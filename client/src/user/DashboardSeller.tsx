@@ -92,7 +92,7 @@ function DashboardSeller(){
                             </div>
                             <div className="row mt-4">
                                 {
-                                    hotels.map((h:any) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={true} />))
+                                    hotels.map((h:any) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={auth._id === h.postedBy? true: false} />))
                                 }
                             </div>
                         </div>

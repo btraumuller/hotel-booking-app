@@ -13,7 +13,9 @@ import Dashboard from "./user/Dashboard";
 import DashboardSeller from "./user/DashboardSeller";
 import StripeCallback from "./stripe/StripeCallback";
 import EditHotel from "./hotels/EditHotel";
-
+import ViewHotel from "./hotels/ViewHotel";
+import StripeSuccess from "./stripe/StripeSuccess";
+import StripeCancel from "./stripe/StripeCancel";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -26,12 +28,15 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/hotels/:hotelid" component={ViewHotel} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
           <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
           <PrivateRoute exact path="/hotels/new" component={NewHotel} />
           <PrivateRoute exact path="/hotels/edit/:hotelid" component={EditHotel} />
           <PrivateRoute exact path="/stripe/callback" component={StripeCallback} />
+          <PrivateRoute exact path="/stripe/success/:hotelid" component={StripeSuccess} />
+          <PrivateRoute exact path="/stripe/cancel" component={StripeCancel} />
         </Switch>
     </BrowserRouter>
   );

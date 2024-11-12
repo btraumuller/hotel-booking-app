@@ -1,5 +1,6 @@
 import {expressjwt} from 'express-jwt';
 import Hotel from '../models/hotel';
+
 export const requireSignin = expressjwt({
     secret: process.env.JWT_SECRET,
     algorithms: ["HS256"]  // this algorithm is used to decode the token   

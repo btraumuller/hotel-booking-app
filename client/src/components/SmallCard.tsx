@@ -44,7 +44,7 @@ export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDel
                         </p>
                         <div className="d-flex justify-content-between h4">
                             {showViewMoreButton && (
-                                <button className="btn btn-primary" onClick={() => history.push(`/hotel/${h._id}`)}>Show More</button>
+                                <button className="btn btn-primary" onClick={() => history.push(`/hotels/${h._id}`)}>Show More</button>
                             )}
                             {owner && (
                                 <>

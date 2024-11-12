@@ -113,8 +113,6 @@ export function hotelForm({handleSubmit, handleChange, handleImageChange, values
                 )
                     
                 }
-                
-                
                 <button className="btn btn-outline-primary mt-4">Save</button>
             </div>
     </form>

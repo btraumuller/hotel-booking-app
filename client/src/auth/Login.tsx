@@ -2,7 +2,7 @@ import {toast} from "react-toastify";
 //import {login} from "../actions/auth";
 import axios from "axios";
 import {useState} from "react";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/forms/LoginForm";
 import {useDispatch} from "react-redux";
 
 function Login({history}:any) {

@@ -25,8 +25,8 @@ const StripeCallback = ({history}:any) => {
                         type: "LOGGED_IN_USER",
                         payload: res.data
                     });
-                    window.localStorage.setItem('user', JSON.stringify(res.data));
-                    history.push('/dashboard/sellers');
+                    window.localStorage.setItem('auth', JSON.stringify(res.data));
+                    history.go('/dashboard/sellers');
                 });
 
             } catch (error) {
