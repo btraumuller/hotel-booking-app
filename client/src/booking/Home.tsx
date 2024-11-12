@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import SmallCard from "../components/SmallCard";
+import SmallCard from "../components/cards/SmallCard";
 function Home() {
     const {user} = useSelector((state:any) => ({...state}));
     const [hotels, setHotels] = useState([]);

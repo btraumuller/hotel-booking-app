@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { diffDays } from "../actions/hotel";
+import { diffDays, isAlreadyBooked } from "../actions/hotel";
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 export default function ViewHotel({ match, history }: any) {
@@ -17,6 +17,7 @@ export default function ViewHotel({ match, history }: any) {
         }
     });
     const [loading, setLoading] = useState(false);
+    const [alreadyBooked, setAlreadyBooked] = useState(false);
     const {auth}:any = useSelector((state:any) => ({...state}));
     const [preview, setPreview]=  useState('https://via.placeholder.com/100x100.png?text=PREVIEW');
 
@@ -34,7 +35,20 @@ export default function ViewHotel({ match, history }: any) {
         }
 
     }, [match.params.hotelid, hotel]);
-
+    useEffect(() => {
+        if (auth && auth.token){
+            const isAlreadyBooked = async () => {
+                const res = await axios.get(`${process.env.REACT_APP_Server_API}/is-already-booked/${match.params.hotelid}`, {
+                    headers:{
+                        Authorization: `Bearer ${auth.token}`
+                    }
+                });
+                setAlreadyBooked(res.data);
+            }
+            isAlreadyBooked();
+        }
+    }, [auth, match.params.hotelid]);
+    
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         setLoading(true);
@@ -88,9 +102,10 @@ export default function ViewHotel({ match, history }: any) {
                         </p>
                         <i>Posted By: {hotel.postedBy && hotel.postedBy.name}</i>
                         <br />
-                        <button className="btn btn-block btn-lg btn-primary mt-3" onClick={handleClick} disabled={loading}>
+                        <button className="btn btn-block btn-lg btn-primary mt-3" onClick={handleClick} disabled={loading || alreadyBooked}>
                             {loading ? 
-                                "Loading..." 
+                                "Loading..."
+                                : alreadyBooked ? "Already Booked"
                                 : auth && auth.token ? 
                                 "Book Now" : "Login to Book"
                             }

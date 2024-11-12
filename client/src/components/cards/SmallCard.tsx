@@ -1,5 +1,5 @@
-import { currencyFormatter } from "../actions/stripe"
-import { diffDays } from "../actions/hotel"
+import { currencyFormatter } from "../../actions/stripe"
+import { diffDays } from "../../actions/hotel"
 import { useHistory, Link } from "react-router-dom"
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
 export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDelete}: { h:any, owner:boolean, showViewMoreButton:boolean, handleHotelDelete: (id: string) => void }){

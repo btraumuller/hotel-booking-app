@@ -7,7 +7,7 @@ import {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {HomeOutlined} from '@ant-design/icons'
 import {toast} from 'react-toastify';
-import SmallCard from "../components/SmallCard";
+import SmallCard from "../components/cards/SmallCard";
 
 function DashboardSeller(){
 

@@ -1,6 +1,16 @@
 import express from 'express';
 import formidable from 'express-formidable';
-import { addHotel, getHotels, getHotel, image, getSellerHotels, deleteHotel, updateHotel } from "../controllers/hotel";
+import { 
+    addHotel, 
+    getHotels, 
+    getHotel, 
+    image, 
+    getSellerHotels, 
+    deleteHotel, 
+    updateHotel,
+    userHotelBookings,
+    isAlreadyBooked 
+} from "../controllers/hotel";
 import { requireSignin, hotelOwner  } from '../middleware';
 const router  = express.Router();
 
@@ -18,4 +28,7 @@ router.get('/hotel/:hotelId', getHotel);
 
 router.put('/update-hotel/:hotelid', requireSignin, formidable(), updateHotel);
 
+router.get('/user-hotel-bookings', requireSignin, userHotelBookings);
+
+router.get('/is-already-booked/:hotelId', requireSignin, isAlreadyBooked);
 module.exports = router;
