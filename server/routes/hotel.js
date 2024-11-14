@@ -9,7 +9,8 @@ import {
     deleteHotel, 
     updateHotel,
     userHotelBookings,
-    isAlreadyBooked 
+    isAlreadyBooked,
+    searchListings 
 } from "../controllers/hotel";
 import { requireSignin, hotelOwner  } from '../middleware';
 const router  = express.Router();
@@ -31,4 +32,6 @@ router.put('/update-hotel/:hotelid', requireSignin, formidable(), updateHotel);
 router.get('/user-hotel-bookings', requireSignin, userHotelBookings);
 
 router.get('/is-already-booked/:hotelId', requireSignin, isAlreadyBooked);
+
+router.post('/search-listings', searchListings);
 module.exports = router;

@@ -1,0 +1,14 @@
+.pointer{
+    cursor: pointer;
+}
+.ant-modal-footer{
+    display: none;
+}
+.ant-select, .search-locations, .ant-picker-range{
+    height: 3.125rem !important;
+    border-radius:0;
+}
+
+.btn-square, .ant-select-selector{
+    border-radius:0 !important;
+}

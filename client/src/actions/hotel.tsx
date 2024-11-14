@@ -66,3 +66,7 @@ export const isAlreadyBooked = async (token:string, hotelId:string) => {
         }
     });
 }
+
+export const searchListings = async (query:any) => {
+    await axios.post(`${process.env.REACT_APP_Server_API}/search-listings`, query);
+}

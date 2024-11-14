@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import SmallCard from "../components/cards/SmallCard";
+import Search from "../components/forms/Search";
 function Home() {
     const {user} = useSelector((state:any) => ({...state}));
     const [hotels, setHotels] = useState([]);
@@ -30,7 +31,11 @@ function Home() {
 
       <>
         <div className="container-fluid h1 p-5 text-center">
-          <h1>Home {JSON.stringify(user)}</h1>
+          <h1>All Hotels</h1>
+        </div>
+        <div className="container-xl">
+          <br />
+          <Search />
         </div>
         <div className="container-xl">
           {hotels.map((h:any) => (<SmallCard key={h._id} h={h} showViewMoreButton={true} handleHotelDelete={handleHotelDelete} owner={owner} /> ))}

@@ -16,6 +16,7 @@ import EditHotel from "./hotels/EditHotel";
 import ViewHotel from "./hotels/ViewHotel";
 import StripeSuccess from "./stripe/StripeSuccess";
 import StripeCancel from "./stripe/StripeCancel";
+import SearchResults from "./hotels/SearchResults";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/hotels/:hotelid" component={ViewHotel} />
+          <Route exact path="/search-results" component={SearchResults} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
           <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
