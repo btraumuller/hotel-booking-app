@@ -18,7 +18,7 @@ export default function ViewHotel({ match, history }: any) {
     });
     const [loading, setLoading] = useState(false);
     const [alreadyBooked, setAlreadyBooked] = useState(false);
-    const {auth}:any = useSelector((state:any) => ({...state}));
+    const {auth} = useSelector((state:any) => ({...state}));
     const [preview, setPreview]=  useState('https://via.placeholder.com/100x100.png?text=PREVIEW');
 
     let init: React.MutableRefObject<boolean> = useRef(true);
@@ -48,7 +48,7 @@ export default function ViewHotel({ match, history }: any) {
             isAlreadyBooked();
         }
     }, [auth, match.params.hotelid]);
-    
+
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         setLoading(true);
