@@ -10,5 +10,5 @@ It was built using the following tech stack:
 - Node.js
 - Typescript/Javascript
 
-As the course was built in 2021, I have updated it to use today's latest versions of React and modified it to use
+As the course was built in 2021, I have updated it to use React 18 and modified it to use
 Typescript as well.  
