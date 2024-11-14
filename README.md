@@ -10,5 +10,4 @@ It was built using the following tech stack:
 - Node.js
 - Typescript/Javascript
 
-As the course was built in 2021, I have adapted what I learned so that the application could use React 18 and the latest version of Redux Toolkit. 
-The course only utilized JavaScript so I modified it to include Typescript as well. 
+As the course was built in 2021, I have adapted what was being learned to React 18 and the latest version of Redux Toolkit. The course only utilized JavaScript as well so I modified the front-end to include Typescript. 
