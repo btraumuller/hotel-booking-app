@@ -12,7 +12,7 @@ export default function Search(){
     const history = useHistory();
 
     const handleSubmit = () => {
-        history.push(`/search-result?location=${location}&date=${date.join(',')}&bed=${bed}`);
+        history.push(`/search-result?location=${location}&date=${date}&bed=${bed}`);
     }
 
     return(

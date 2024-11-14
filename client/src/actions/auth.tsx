@@ -1,26 +1,12 @@
 import axios from "axios";
+import { registerType, loginUser, nextType } from "../types/auth";
 
-type registerType = {
-    name: string,
-    email: string,
-    password: string
-}
-
-type loginUserType = {
-    email: string,
-    password: string
-}
-
-type nextType = {
-    (user:any):void
-}
 
 export const register = async (user:registerType) => {
     await axios.post(`${process.env.REACT_APP_Server_API}/register`, user);
 }
 
-export const login = async (user:loginUserType) => {
-    console.log(user);
+export const login = async (user:loginUser) => {
     await axios.post(`${process.env.REACT_APP_Server_API}/login`, user);
 }
 

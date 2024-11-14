@@ -1,10 +1,4 @@
-type loginProps = {
-    email: string,
-    setEmail: (email:string) => void,
-    password: string,
-    setPassword: (password:string) => void,
-    handleSubmit: (e:any) => void
-}
+import { loginProps } from "../../types/auth";
 
 function LoginForm({handleSubmit, email, setEmail, password, setPassword}:loginProps){
     

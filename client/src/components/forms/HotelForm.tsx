@@ -1,7 +1,7 @@
 import { DatePicker, Select } from 'antd';
 import moment from 'moment';
 const {Option} = Select;
-type hotelFormType = {
+type hotelForm = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -17,7 +17,7 @@ type hotelFormType = {
     setValues: (values: any) => void,
 }
 
-export function hotelForm({handleSubmit, handleChange, handleImageChange, values, setValues}:hotelFormType) {
+export function hotelForm({handleSubmit, handleChange, handleImageChange, values, setValues}:hotelForm) {
     
     const {title, content, price, location, bed, to, from} = values;
     

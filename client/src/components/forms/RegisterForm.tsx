@@ -1,13 +1,5 @@
 
-type registerProps = {
-    name: string,
-    setName: (name:string) => void,
-    email: string,
-    setEmail: (email:string) => void,
-    password: string,
-    setPassword: (password:string) => void,
-    handleSubmit: (e:any) => void
-}
+import { registerProps } from "../../types/auth";
 
 function RegisterForm({handleSubmit, name, setName, email, setEmail, password, setPassword}:registerProps){
     

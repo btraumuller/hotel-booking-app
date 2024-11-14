@@ -4,11 +4,13 @@ import axios from "axios";
 import {useState} from "react";
 import LoginForm from "../components/forms/LoginForm";
 import {useDispatch} from "react-redux";
+import { useHistory } from "react-router-dom";
 
-function Login({history}:any) {
-  const [email, setEmail] = useState("btraumuller@gmail.com");
-  const [password, setPassword] = useState("Dragons1988");
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
     const dispatch = useDispatch();
+    const history = useHistory();
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       try{
@@ -22,14 +24,18 @@ function Login({history}:any) {
         });
 
         if (res.data) {
-            console.log('Save USER Response IN Redux and Local Storage then redirect');
+
+            //console.log('Save USER Response IN Redux and Local Storage then redirect');
+
             //save user and token to local storage
             window.localStorage.setItem('auth', JSON.stringify(res.data));
+
             dispatch({
               type: "LOGGED_IN_USER",
               payload: res.data
             })
-            history.push('/');
+
+            history.push('/dashboard/sellers');
         }
         return res;
       }catch (err:any){
