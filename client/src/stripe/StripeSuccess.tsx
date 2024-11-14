@@ -1,28 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import {LoadingOutlined} from '@ant-design/icons';
-export default function StripeSuccess({match, history}:any) {
+import { useHistory } from "react-router-dom";
+import { matchParams } from "../types/global";
+export default function StripeSuccess(match:matchParams) {
     const {auth} = useSelector((state:any) => ({...state}));
-
+    const history = useHistory();
+    let init:React.MutableRefObject<boolean> = useRef(true);
     useEffect(() => {
-        console.log('hey');
-        const stripeSuccessRequest = async (token:string, hotelId:string) => {
-            return await axios.post(`${process.env.REACT_APP_Server_API}/stripe-success`, {hotelId}, {
-                headers:{
-                    Authorization: `Bearer ${token}`
-                }
-            });
-        }
-        stripeSuccessRequest(auth.token, match.params.hotelid).then((res) => {
-            console.log("ORDER",res);
-            if (res.data.success){
-                history.go('/dashboard');
-            }else{
-                history.go('/stripe/cancel');
+        if (init.current){
+
+            const stripeSuccessRequest = async (token:string, hotelId:string) => {
+                return await axios.post(`${process.env.REACT_APP_Server_API}/stripe-success`, {hotelId}, {
+                    headers:{
+                        Authorization: `Bearer ${token}`
+                    }
+                });
             }
+    
+            stripeSuccessRequest(auth.token, match.params.hotelid).then((res) => {
+                console.log("ORDER",res);
+                if (res.data.success){
+                    history.push('/dashboard');
+                }else{
+                    history.push('/stripe/cancel');
+                }
+                
+            });
             
-        });
+            init.current = false;
+        }
+
     },[auth.token, match.params.hotelid, history]);
     return (
         <div className="container">

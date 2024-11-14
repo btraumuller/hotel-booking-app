@@ -42,8 +42,10 @@ export default function EditHotel({match}:any){
                     Authorization: `Bearer ${auth.token}`
                 }
             });
+            
             console.log('HOTEL UPDATE RES',res);
             toast.success(`${res.data.title} is updated`);
+
         }catch(error:any){
             console.log(error);
             toast.error(error.response.data);

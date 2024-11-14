@@ -1,43 +1,48 @@
 import {LoadingOutlined} from '@ant-design/icons';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserInLocalStorage } from '../actions/auth';
+import { useHistory } from 'react-router-dom';
 
-const StripeCallback = ({history}:any) => {
+const StripeCallback = () => {
     const {auth} = useSelector((state:any) => ({...state}));
     const dispatch = useDispatch();
-    
+    const history = useHistory();
+    let init: React.MutableRefObject<boolean> = useRef(true);
     useEffect(() => {
-        
-        const accountStatus = async () => {
-            
-            try {
-                const res = await axios.post(`${process.env.REACT_APP_Server_API}/get-account-status`, {}, {
-                    headers:{
-                        Authorization: `Bearer ${auth.token}`
-                    }
-                });
-
-                //console.log("USER ACCOUNT STATUS ON STRIPE CALLBACK",res);
-                updateUserInLocalStorage(res.data, ()=>{
-                    dispatch({
-                        type: "LOGGED_IN_USER",
-                        payload: res.data
+        if (init.current){
+            const accountStatus = async () => {
+                try {
+                    const res = await axios.post(`${process.env.REACT_APP_Server_API}/get-account-status`, {}, {
+                        headers:{
+                            Authorization: `Bearer ${auth.token}`
+                        }
                     });
-                    window.localStorage.setItem('auth', JSON.stringify(res.data));
-                    history.go('/dashboard/sellers');
-                });
-
-            } catch (error) {
-                console.log(error);
+    
+                    //console.log("USER ACCOUNT STATUS ON STRIPE CALLBACK",res);
+                    updateUserInLocalStorage(res.data, ()=>{
+                        dispatch({
+                            type: "LOGGED_IN_USER",
+                            payload: res.data
+                        });
+                        window.localStorage.setItem('auth', JSON.stringify(res.data));
+                        history.push('/dashboard/sellers');
+                    });
+    
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        }
+    
+            if (auth && auth.token) {
+                accountStatus();
+            }
 
-        if (auth && auth.token) {
-            accountStatus();
+            init.current = false;
         }
-    }, [auth]);
+       
+    }, [auth, dispatch, history]);
     
     return (
         <div className="d-flex justify-content-center p-5">
