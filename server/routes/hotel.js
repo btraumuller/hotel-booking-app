@@ -28,7 +28,7 @@ router.delete('/delete-hotel/:hotelId', requireSignin, hotelOwner, deleteHotel);
 
 router.get('/hotel/:hotelId', getHotel);
 
-router.put('/update-hotel/:hotelid', requireSignin, formidable(), updateHotel);
+router.put('/update-hotel', requireSignin, formidable(), updateHotel);
 
 router.get('/user-hotel-bookings', requireSignin, userHotelBookings);
 

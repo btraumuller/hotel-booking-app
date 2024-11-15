@@ -26,7 +26,6 @@ function App() {
         <TopNav />
         <ToastContainer position="top-center" />
         <Switch>
-          
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
           <PrivateRoute exact path="/hotels/new" component={NewHotel} />

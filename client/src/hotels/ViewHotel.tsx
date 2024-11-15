@@ -46,7 +46,7 @@ export default function ViewHotel({ match}: any) {
                         Authorization: `Bearer ${auth.token}`
                     }
                 });
-                setAlreadyBooked(res.data);
+                setAlreadyBooked(res.data.ok);
             }
             isAlreadyBooked();
         }
@@ -113,6 +113,7 @@ export default function ViewHotel({ match}: any) {
                                 "Book Now" : "Login to Book"
                             }
                         </button>
+                        <p></p>
                     </div>
                 </div>
             </div>

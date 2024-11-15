@@ -15,18 +15,14 @@ export const addHotel = async (token:string, hotel:any) => {
 
 export const allHotels = async () => {
     try{
-        await axios.get(`${process.env.REACT_APP_Server_API}/all-hotels`);
+        return await axios.get(`${process.env.REACT_APP_Server_API}/all-hotels`);
     }catch(err){
         return err;
     }
 }
 
-export const sellerHotels = async (token:string) => {
-    await axios.get(`${process.env.REACT_APP_Server_API}/seller-hotels`, {
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    });
+export const sellerHotels = async () => {
+    await axios.get(`${process.env.REACT_APP_Server_API}/seller-hotels`);
 }
 
 export const diffDays = (from: Date, to: Date) => {
@@ -53,6 +49,7 @@ export const getHotel = async (hotelId:string) => {
 
 export const updateHotel = async (token:string, hotelId:string) => {
     try{
+        console.log(hotelId);
         return await axios.post(`${process.env.REACT_APP_Server_API}/update-hotel`, hotelId, {
             headers:{
                 Authorization: `Bearer ${token}`
