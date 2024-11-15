@@ -7,7 +7,12 @@ export const register = async (user:registerType) => {
 }
 
 export const login = async (user:loginUser) => {
-    await axios.post(`${process.env.REACT_APP_Server_API}/login`, user);
+    try{
+      return await axios.post(`${process.env.REACT_APP_Server_API}/login`, user);
+    }catch(err){
+        return err;
+    }
+    
 }
 
 export const updateUserInLocalStorage = (user:any, next:nextType) => {

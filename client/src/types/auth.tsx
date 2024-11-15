@@ -31,3 +31,22 @@ export type loginProps = {
     setPassword: (password:string) => void,
     handleSubmit: (e:any) => void
 }
+export type LoginUserData = {
+    token: string,
+    user: {
+        _id: string,
+        name: string,
+        email: string,
+        stripe_account_id: string,
+        stripe_seller: {},
+        stripeSession: {},
+        createdAt: string,
+        updatedAt: string
+    }
+}
+
+export type LoginApiResponse = {
+    status: number,
+    message: string,
+    data: LoginUserData
+}
