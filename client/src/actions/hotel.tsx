@@ -21,8 +21,16 @@ export const allHotels = async () => {
     }
 }
 
-export const sellerHotels = async () => {
-    await axios.get(`${process.env.REACT_APP_Server_API}/seller-hotels`);
+export const sellerHotels = async (token:string) => {
+    try{
+        return await axios.get(`${process.env.REACT_APP_Server_API}/seller-hotels`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }
 }
 
 export const diffDays = (from: Date, to: Date) => {
@@ -36,20 +44,27 @@ export const diffDays = (from: Date, to: Date) => {
 }
 
 export const deleteHotel = async (token:string, hotelId:string) => {
-    await axios.delete(`${process.env.REACT_APP_Server_API}/delete-hotel/${hotelId}`, {
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    });
+    try{
+        return await axios.delete(`${process.env.REACT_APP_Server_API}/delete-hotel/${hotelId}`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }    
 }
 
 export const getHotel = async (hotelId:string) => {
-    await axios.get(`${process.env.REACT_APP_Server_API}/hotel/${hotelId}`);
+    try{
+        return await axios.get(`${process.env.REACT_APP_Server_API}/hotel/${hotelId}`);
+    }catch(err){
+        return err;
+    }
 }
 
 export const updateHotel = async (token:string, hotelId:string) => {
     try{
-        console.log(hotelId);
         return await axios.post(`${process.env.REACT_APP_Server_API}/update-hotel`, hotelId, {
             headers:{
                 Authorization: `Bearer ${token}`
@@ -89,5 +104,10 @@ export const isAlreadyBooked = async (token:string, hotelId:string) => {
 }
 
 export const searchListings = async (query:any) => {
-    await axios.post(`${process.env.REACT_APP_Server_API}/search-listings`, query);
+    try{
+       return await axios.post(`${process.env.REACT_APP_Server_API}/search-listings`, query);
+    }catch(err){
+        return err;
+    }
+    
 }

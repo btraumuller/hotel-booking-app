@@ -20,7 +20,8 @@ function Dashboard(){
             setBooking(res.data);
         }
         loadUserBookings();
-    },[auth.token]);    
+    },[auth.token]);
+
     return (
         <>
             <div className="container-fluid p-5 text-center bg-secondary">

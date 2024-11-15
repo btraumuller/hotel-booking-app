@@ -75,7 +75,7 @@ export const addHotel = async (req, res) => {
 
 export const getHotels = async (req, res) => {
     try{
-        let all = await Hotel.find().limit(24).select("-image.data").populate('postedBy', '_id name').exec();
+        let all = await Hotel.find({from: {$gte: new Date()}}).limit(24).select("-image.data").populate('postedBy', '_id name').exec();
         res.json(all);
     }
     catch(err){
@@ -159,7 +159,7 @@ export const isAlreadyBooked = async (req, res) => {
 }
 export const searchListings = async (req, res) => {
     const {location, bed, date} = req.body;
-    const fromDate = date.split(",");
+    const fromDate = date? date.split(","):"";
     let result = await Hotel.find({from: {$gte: new Date(fromDate[0])}, location: location, bed: bed}).select("-image.data").exec();
-    res.json(result);
+    res.json(result)
 }

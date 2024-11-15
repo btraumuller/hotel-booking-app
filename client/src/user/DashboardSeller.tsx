@@ -1,13 +1,13 @@
-import React from "react";
-import DasboardNav from "../components/DashboardNav";
-import ConnectNav from "../components/ConnectNav";
-import axios from "axios";
-import {Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {HomeOutlined} from '@ant-design/icons'
 import {toast} from 'react-toastify';
+import { deleteHotel, sellerHotels } from '../actions/hotel';
+import { createConnectAccount } from '../actions/stripe';
 import SmallCard from "../components/cards/SmallCard";
+import DasboardNav from "../components/DashboardNav";
+import ConnectNav from "../components/ConnectNav";
 
 function DashboardSeller(){
 
@@ -19,11 +19,7 @@ function DashboardSeller(){
     const handleClick = async () => {
         setLoading(true);
         try{
-            let res = await axios.post(`${process.env.REACT_APP_Server_API}/create-connect-account`, {}, {
-                headers:{
-                    Authorization: `Bearer ${auth.token}`,
-                }
-            });
+            let res:any = createConnectAccount(auth.token);
 
             window.location.href = res.data;
             
@@ -39,28 +35,33 @@ function DashboardSeller(){
         
         if (!window.confirm('Are you sure you want to delete this hotel?')) return;
 
-        await axios.delete(`${process.env.REACT_APP_Server_API}/delete-hotel/${hotelId}`, {
-            headers:{
-                Authorization: `Bearer ${auth.token}`
+        deleteHotel(auth.token, hotelId).then((res:any) => {
+            
+            if (!res) {
+                throw new Error('Hotel delete failed');
             }
-        }).then((res) => {
+
             toast.success('Hotel Deleted');
             setHotels(res.data);
-        }).catch((error) => {
+
+        }).catch((error:any) => {
+
             console.log(error);
             toast.error('Hotel Delete Failed');
+
         });
     }
 
     useEffect(() => {
         const loadSellers = async () => {
             try{
-                let res = await axios.get(`${process.env.REACT_APP_Server_API}/seller-hotels`, {
-                    headers:{
-                        Authorization: `Bearer ${auth.token}`
+                sellerHotels(auth.token).then((res:any) =>{
+                    if (!res) {
+                        throw new Error('Load Sellers Hotel Failed');
                     }
+                    setHotels(res.data);
                 });
-                setHotels(res.data);
+                
             }catch(error){
                 console.log(error);
             }
@@ -76,9 +77,9 @@ function DashboardSeller(){
                 <ConnectNav />
             </div>
             <div className="container-xxl">
-            <div className="container-fluid p-4">
-                <DasboardNav />
-            </div>
+                <div className="container-fluid p-4">
+                    <DasboardNav />
+                </div>
                 {connectedUser ?
                     (
                         <div className="container-fluid">

@@ -38,6 +38,7 @@ export default function EditHotel({match}:any){
         hotelData.append("to", values.to);
 
         try{
+            
             let res:any = await updateHotel(auth.token, match.params.hotelid);
             
             if (!res) {
@@ -79,7 +80,7 @@ export default function EditHotel({match}:any){
             }).catch((error:any) => {
                 console.log(error);
             });
-            
+
             init.current = false;
         }
 

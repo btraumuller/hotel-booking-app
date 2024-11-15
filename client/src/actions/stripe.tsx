@@ -1,11 +1,15 @@
 import axios from 'axios';
 
 export const createConnectAccount = async (token:string) => {
-    await axios.post(`${process.env.REACT_APP_Server_API}/create-connect-account`, {}, {
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    });
+    try{
+        return await axios.post(`${process.env.REACT_APP_Server_API}/create-connect-account`, {}, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }
 }
 
 export const getAccountStatus = async (token:string) => {
