@@ -37,7 +37,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/hotels/:hotelid" component={ViewHotel} />
-          <Route exact path="/search-results" component={SearchResults} />
+          <Route exact path="/search-result" component={SearchResults} />
         </Switch>
     </BrowserRouter>
   );

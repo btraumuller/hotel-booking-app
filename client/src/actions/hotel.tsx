@@ -88,11 +88,15 @@ export const loadSellerHotel = async (token:string, hotelId:string) => {
 }
 
 export const userHotelBookings = async (token:string) => {
-    await axios.get(`${process.env.REACT_APP_Server_API}/user-hotel-bookings`, {
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    });
+    try{
+        return await axios.get(`${process.env.REACT_APP_Server_API}/user-hotel-bookings`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }
 }
 
 export const isAlreadyBooked = async (token:string, hotelId:string) => {
