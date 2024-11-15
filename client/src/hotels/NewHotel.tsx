@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import HotelForm from "../components/forms/HotelForm";
 
 function NewHotel(){
+
     const [values, setValues] = useState({
         title: "",
         content: "",
@@ -38,14 +39,17 @@ function NewHotel(){
 
         try{
             let res = await addHotel(auth.token, hotelData);
-            console.log('HOTEL CREATE RES',res);
+            
+            if (!res) {
+                throw new Error('Hotel posting failed');
+            }
+
             toast.success('New hotel is posted');
             document.querySelector('form')?.reset();
         }catch(error:any){
             console.log(error);
             toast.error(error.response.data);
         }
-        console.log(values);
     }
 
     const handleImageChange = (e: { target: { files: any[string]; }; }) => {

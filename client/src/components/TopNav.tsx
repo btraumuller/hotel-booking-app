@@ -22,6 +22,7 @@ const TopNav = () => {
               </>
             ):(
               <>
+                <Link className="nav-link" to="/dashboard/sellers">Dashboard</Link>
                 <Link className="nav-link" onClick={logout} to="/login">Logout</Link>
               </>
             )

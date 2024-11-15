@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { diffDays, isAlreadyBooked } from "../actions/hotel";
+import { diffDays } from "../actions/hotel";
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
-export default function ViewHotel({ match, history }: any) {
+
+export default function ViewHotel({ match}: any) {
+    const history = useHistory();
     const [hotel, setHotel] = useState({
         title: "",
         content: "",

@@ -1,8 +1,9 @@
 import {useState, useEffect, useRef} from 'react';
 import {toast} from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { loadSellerHotel, updateHotel } from '../actions/hotel';
 import HotelForm from "../components/forms/HotelForm";
-import axios from 'axios';
+
 
 
 export default function EditHotel({match}:any){
@@ -37,13 +38,14 @@ export default function EditHotel({match}:any){
         hotelData.append("to", values.to);
 
         try{
-            let res = await axios.post(`${process.env.REACT_APP_Server_API}/update-hotel/${match.params.hotelid}`, hotelData, {
-                headers:{
-                    Authorization: `Bearer ${auth.token}`
-                }
-            });
+            let res:any = await updateHotel(auth.token, match.params.hotelid);
             
+            if (!res) {
+                throw new Error('Hotel update failed');
+            }
+
             console.log('HOTEL UPDATE RES',res);
+
             toast.success(`${res.data.title} is updated`);
 
         }catch(error:any){
@@ -68,17 +70,20 @@ export default function EditHotel({match}:any){
     let init: React.MutableRefObject<boolean> = useRef(true);
 
     useEffect(() => {
+
         if (init.current){
-            const loadSellerHotels = async () => {
-                let res = await axios.get(`${process.env.REACT_APP_Server_API}/hotel/${match.params.hotelid}`);
+
+            loadSellerHotel(auth.token, match.params.hotelid).then((res:any) => {
                 setValues({...values, ...res.data});
                 setPreview(`${process.env.REACT_APP_Server_API}/hotel/image/${match.params.hotelid}`);
-            }
-            loadSellerHotels();
+            }).catch((error:any) => {
+                console.log(error);
+            });
+            
             init.current = false;
         }
 
-    }, [match.params.hotelid, values]);
+    }, [auth.token, match.params.hotelid, values]);
 
     return(
         <>

@@ -26,19 +26,19 @@ function App() {
         <TopNav />
         <ToastContainer position="top-center" />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/hotels/:hotelid" component={ViewHotel} />
-          <Route exact path="/search-results" component={SearchResults} />
+          
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
           <PrivateRoute exact path="/dashboard/sellers" component={DashboardSeller} />
           <PrivateRoute exact path="/hotels/new" component={NewHotel} />
           <PrivateRoute exact path="/hotels/edit/:hotelid" component={EditHotel} />
           <PrivateRoute exact path="/stripe/callback" component={StripeCallback} />
           <PrivateRoute exact path="/stripe/success/:hotelid" component={StripeSuccess} />
           <PrivateRoute exact path="/stripe/cancel" component={StripeCancel} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/hotels/:hotelid" component={ViewHotel} />
+          <Route exact path="/search-results" component={SearchResults} />
         </Switch>
     </BrowserRouter>
   );

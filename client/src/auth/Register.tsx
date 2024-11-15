@@ -5,11 +5,13 @@ import { register } from "../actions/auth";
 import RegisterForm from "../components/forms/RegisterForm";
 
 function Register() {
+  
+    const history = useHistory();
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const history = useHistory();
+    
     const handleSubmit = async (e: { preventDefault: () => void; }) =>{
       
       e.preventDefault();

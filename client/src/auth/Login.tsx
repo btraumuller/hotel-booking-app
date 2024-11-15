@@ -7,10 +7,13 @@ import { LoginApiResponse } from "../types/auth";
 import LoginForm from "../components/forms/LoginForm";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     

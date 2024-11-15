@@ -13,6 +13,7 @@ import {
     searchListings 
 } from "../controllers/hotel";
 import { requireSignin, hotelOwner  } from '../middleware';
+
 const router  = express.Router();
 
 router.post('/add-hotel', requireSignin, formidable(), addHotel);
@@ -34,4 +35,5 @@ router.get('/user-hotel-bookings', requireSignin, userHotelBookings);
 router.get('/is-already-booked/:hotelId', requireSignin, isAlreadyBooked);
 
 router.post('/search-listings', searchListings);
+
 module.exports = router;

@@ -1,19 +1,27 @@
 
 import axios from 'axios';
 
-export const addHotel = async (token:any, hotel:any) => {
-    await axios.post(`${process.env.REACT_APP_Server_API}/add-hotel`, hotel, {
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    });
+export const addHotel = async (token:string, hotel:any) => {
+    try{
+        return await axios.post(`${process.env.REACT_APP_Server_API}/add-hotel`, hotel, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }
 }
 
 export const allHotels = async () => {
-    await axios.get(`${process.env.REACT_APP_Server_API}/all-hotels`);
+    try{
+        await axios.get(`${process.env.REACT_APP_Server_API}/all-hotels`);
+    }catch(err){
+        return err;
+    }
 }
 
-export const sellerHotels = async (token:any) => {
+export const sellerHotels = async (token:string) => {
     await axios.get(`${process.env.REACT_APP_Server_API}/seller-hotels`, {
         headers:{
             Authorization: `Bearer ${token}`
@@ -43,12 +51,28 @@ export const getHotel = async (hotelId:string) => {
     await axios.get(`${process.env.REACT_APP_Server_API}/hotel/${hotelId}`);
 }
 
-export const updateHotel = async (token:string, hotel:string) => {
-    await axios.post(`${process.env.REACT_APP_Server_API}/update-hotel`, hotel, {
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    });
+export const updateHotel = async (token:string, hotelId:string) => {
+    try{
+        return await axios.post(`${process.env.REACT_APP_Server_API}/update-hotel`, hotelId, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }
+}
+
+export const loadSellerHotel = async (token:string, hotelId:string) => {
+    try{
+        return await axios.get(`${process.env.REACT_APP_Server_API}/hotel/${hotelId}`, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }
 }
 
 export const userHotelBookings = async (token:string) => {

@@ -1,26 +1,27 @@
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import SmallCard from "../components/cards/SmallCard";
 import Search from "../components/forms/Search";
+
 function Home() {
-    const {user} = useSelector((state:any) => ({...state}));
+   
     const [hotels, setHotels] = useState([]);
     const owner: boolean = true;
+
     const handleHotelDelete = async (hotelId:any) => {
         console.log("delete?", hotelId);
     }
 
     const loadAllHotels = async () => {
-    try {
-        
-        let res:any = await axios.get(`${process.env.REACT_APP_Server_API}/all-hotels`);
-        setHotels(res.data);
+      try {
+          
+          let res:any = await axios.get(`${process.env.REACT_APP_Server_API}/all-hotels`);
+          setHotels(res.data);
 
-    }catch(error){
-        console.log(error);
+      }catch(err){
+          console.log(err);
       }
-        
+          
     }
 
     useEffect(() => {
@@ -38,7 +39,12 @@ function Home() {
           <Search />
         </div>
         <div className="container-xl">
-          {hotels.map((h:any) => (<SmallCard key={h._id} h={h} showViewMoreButton={true} handleHotelDelete={handleHotelDelete} owner={owner} /> ))}
+          {hotels.length === 0 ? 
+            (<h2 className="text-center">No hotels found</h2>) 
+            : 
+            hotels.map((h:any) => (<SmallCard key={h._id} h={h} showViewMoreButton={true} handleHotelDelete={handleHotelDelete} owner={owner} /> ))
+          }
+          
         </div>
       </>
     );

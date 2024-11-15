@@ -1,23 +1,10 @@
 import { DatePicker, Select } from 'antd';
+import { hotelFormType } from '../../types/hotel';
 import moment from 'moment';
 const {Option} = Select;
-type hotelForm = {
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    values: {
-        title: string,
-        content: string,
-        location: string,
-        price: string,
-        from: string,
-        to: string,
-        bed: string
-    },
-    setValues: (values: any) => void,
-}
 
-export function hotelForm({handleSubmit, handleChange, handleImageChange, values, setValues}:hotelForm) {
+
+export function hotelForm({handleSubmit, handleChange, handleImageChange, values, setValues}:hotelFormType) {
     
     const {title, content, price, location, bed, to, from} = values;
     
@@ -78,7 +65,6 @@ export function hotelForm({handleSubmit, handleChange, handleImageChange, values
                     <DatePicker 
                     placeholder="From date" 
                     className="form-control mt-4"
-                    format={"DD-MM-YYYY"} 
                     onChange={(date,dateString) => setValues({...values, from: dateString.toLocaleString()})} 
                     disabledDate={(current) => current && current.valueOf() < Date.now() - 86400000}
                     defaultValue={moment(from, "YYYY-MM-DD")}
@@ -87,7 +73,6 @@ export function hotelForm({handleSubmit, handleChange, handleImageChange, values
                     <DatePicker 
                     placeholder="From date" 
                     className="form-control mt-4"
-                    format={"DD-MM-YYYY"} 
                     onChange={(date,dateString) => setValues({...values, from: dateString.toLocaleString()})} 
                     disabledDate={(current) => current && current.valueOf() < Date.now() - 86400000}
                     />
