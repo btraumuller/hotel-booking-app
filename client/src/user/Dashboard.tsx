@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import DasboardNav from "../components/DashboardNav";
-import ConnectNav from "../components/ConnectNav";
 import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import axios from "axios";
 import { userHotelBookings } from "../actions/hotel";
+import DasboardNav from "../components/DashboardNav";
+import ConnectNav from "../components/ConnectNav";
 import BookingCard from "../components/cards/BookingCard";
+
 function Dashboard(){
+    
     const {auth} = useSelector((state:any) => ({...state}));
     const [booking, setBooking] = useState([]);
     
