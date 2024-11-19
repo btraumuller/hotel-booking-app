@@ -9,7 +9,7 @@ import { userObject } from "../types/global";
 import { paymentSuccess } from "../types/stripe";
 
 
-export default function StripeSuccess(match:matchParams) {
+export default function StripeSuccess({match}:matchParams) {
     const {auth} = useSelector((state:userObject) => ({...state}));
     const history = useHistory();
     let init:React.MutableRefObject<boolean> = useRef(true);
@@ -18,7 +18,7 @@ export default function StripeSuccess(match:matchParams) {
         if (init.current){
 
             stripeSuccessRequest(auth.token, match.params.hotelid).then((res) => {
-                
+
                 if ((res as paymentSuccess).data.success){
                     history.push('/dashboard');
                     toast.success('Payment Success. Hotel booking is confirmed');
