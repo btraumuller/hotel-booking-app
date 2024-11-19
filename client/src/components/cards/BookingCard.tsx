@@ -1,10 +1,9 @@
+import { useState } from "react"
 import { currencyFormatter } from "../../actions/stripe"
 import { diffDays } from "../../actions/hotel"
-import { useHistory} from "react-router-dom"
-import { useState } from "react"
+import { hotel } from "../../types/hotel";
 import OrderModal from "../modals/OrderModal";
-export default function SmallCard({ h, session, orderedBy}: { h:any, session:any, orderedBy:any }){
-    const history = useHistory();
+export default function BookingCard({ h, session, orderedBy}: { h:hotel, session:string, orderedBy:string }){
     const [showModal, setShowModal] = useState(false);
     return(
         <div className="card mb-3">
@@ -29,7 +28,7 @@ export default function SmallCard({ h, session, orderedBy}: { h:any, session:any
                             {h.title}{" "}
                             <span className="float-right text-primary">
                                 {currencyFormatter({
-                                    amount: h.price * 100,
+                                    amount: Number(h.price) * 100,
                                     currency: 'usd'
                                 })}
                             </span>
@@ -38,7 +37,7 @@ export default function SmallCard({ h, session, orderedBy}: { h:any, session:any
                         <p className="card-text">{`${h.content.substring(0, 200)}...`}</p>
                         <p className="card-text">
                             <span className="float-right text-primary">
-                                for {diffDays(h.from, h.to)}
+                                for {diffDays(new Date(h.from), new Date (h.to))}
                             </span>
                         </p>
                         <p className="card-text">

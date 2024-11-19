@@ -2,7 +2,8 @@ import { currencyFormatter } from "../../actions/stripe"
 import { diffDays } from "../../actions/hotel"
 import { useHistory, Link } from "react-router-dom"
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDelete}: { h:any, owner?:boolean, showViewMoreButton:boolean, handleHotelDelete?: (id: string) => void }){
+import { hotel } from "../../types/hotel"
+export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDelete}: { h:hotel, owner?:boolean, showViewMoreButton:boolean, handleHotelDelete?: (id: string) => void }){
     const history = useHistory()
     return(
         <div className="card mb-3">
@@ -27,7 +28,7 @@ export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDel
                             {h.title}{" "}
                             <span className="float-right text-primary">
                                 {currencyFormatter({
-                                    amount: h.price * 100,
+                                    amount: Number(h.price) * 100,
                                     currency: 'usd'
                                 })}
                             </span>
@@ -36,7 +37,7 @@ export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDel
                         <p className="card-text">{`${h.content.substring(0, 200)}...`}</p>
                         <p className="card-text">
                             <span className="float-right text-primary">
-                                for {diffDays(h.from, h.to)}
+                                for {diffDays(new Date(h.from), new Date(h.to))}
                             </span>
                         </p>
                         <p className="card-text">

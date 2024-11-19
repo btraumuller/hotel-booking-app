@@ -1,5 +1,6 @@
 import axios from "axios";
 import { registerType, loginUser, nextType } from "../types/auth";
+import { userObject } from "../types/global";
 
 
 export const register = async (user:registerType) => {
@@ -19,7 +20,7 @@ export const login = async (user:loginUser) => {
     
 }
 
-export const updateUserInLocalStorage = (user:any, next:nextType) => {
+export const updateUserInLocalStorage = (user:userObject, next:nextType) => {
     if (window.localStorage.getItem('auth')){
         let auth = JSON.parse(window.localStorage.getItem('auth') || '{}');
         auth.user = user;

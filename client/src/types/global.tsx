@@ -7,7 +7,7 @@ export type currencyObject = {
     amount: number,
     currency: string
 }
-export type userObject= {
+export interface userObject {
     auth:{
         token: string,
         user: {

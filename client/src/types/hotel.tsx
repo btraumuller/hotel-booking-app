@@ -22,12 +22,18 @@ export type hotel = {
     postedBy: string,
     image: {
         url: string,
-        public_id: string
+        public_id: string,
+        contentType: string
     },
     from: string,
     to: string,
     bed: string
 }
+
+export type hotelArray = {
+    data: hotel[]
+};
+
 export type hotelQuery = { 
     location?: string | undefined,
     date?: string | undefined,
