@@ -4,10 +4,13 @@ import axios from "axios";
 import {LoadingOutlined} from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
 import { matchParams } from "../types/global";
+import { userObject } from "../types/global";
+
 export default function StripeSuccess(match:matchParams) {
-    const {auth} = useSelector((state:any) => ({...state}));
+    const {auth} = useSelector((state:userObject) => ({...state}));
     const history = useHistory();
     let init:React.MutableRefObject<boolean> = useRef(true);
+    
     useEffect(() => {
         if (init.current){
 

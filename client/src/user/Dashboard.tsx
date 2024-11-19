@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { userHotelBookings } from "../actions/hotel";
+import { userObject } from "../types/global";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import BookingCard from "../components/cards/BookingCard";
 
 function Dashboard(){
     
-    const {auth} = useSelector((state:any) => ({...state}));
+    const {auth} = useSelector((state:userObject) => ({...state}));
     const [booking, setBooking] = useState([]);
     
     useEffect(() => {

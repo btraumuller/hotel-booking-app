@@ -5,13 +5,14 @@ import {HomeOutlined} from '@ant-design/icons'
 import {toast} from 'react-toastify';
 import { deleteHotel, sellerHotels } from '../actions/hotel';
 import { createConnectAccount } from '../actions/stripe';
+import { userObject } from '../types/global';
 import SmallCard from "../components/cards/SmallCard";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 
 function DashboardSeller(){
 
-    const {auth} = useSelector((state:any) => ({...state}));
+    const {auth} = useSelector((state:userObject) => ({...state}));
     const [loading, setLoading] = useState(false);
     const [hotels, setHotels] = useState([]);
     let connectedUser = auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled? true : false;
@@ -19,11 +20,11 @@ function DashboardSeller(){
     const handleClick = async () => {
         setLoading(true);
         try{
+            
             let res:any = createConnectAccount(auth.token);
 
             window.location.href = res.data;
             
-
         }catch (error){
             console.log(error);
             toast.error('Stripe connect failed, Try again.');

@@ -13,3 +13,23 @@ export type hotelFormType = {
     },
     setValues: (values: any) => void,
 }
+export type hotel = {
+    _id: string,
+    title: string,
+    content: string,
+    location: string,
+    price: string,
+    postedBy: string,
+    image: {
+        url: string,
+        public_id: string
+    },
+    from: string,
+    to: string,
+    bed: string
+}
+export type hotelQuery = { 
+    location?: string | undefined,
+    date?: string | undefined,
+    bed?: string | undefined
+}

@@ -6,12 +6,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { currencyFormatter } from "../actions/stripe";
 import { diffDays } from "../actions/hotel";
+import { userObject } from "../types/global";
 const {Ribbon} = Badge;
 
 function ConnectNav() {
     const [balance, setBalance] = useState<{ pending?: { currency: string, amount: number }[] }>({});
     const [loading, setLoading] = useState(false);
-    const {auth} = useSelector((state:any) => ({...state}));
+    const {auth} = useSelector((state:userObject) => ({...state}));
     const {user} = auth;
 
     const handlePayoutSettings = async () => {

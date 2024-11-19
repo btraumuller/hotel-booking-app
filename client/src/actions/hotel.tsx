@@ -1,14 +1,16 @@
 
 import axios from 'axios';
 
-export const addHotel = async (token:string, hotel:any) => {
-    try{
+import { hotelQuery } from '../types/hotel';
+
+export const addHotel = async (token: string, hotel:any): Promise<any> => {
+    try {
         return await axios.post(`${process.env.REACT_APP_Server_API}/add-hotel`, hotel, {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
             }
         });
-    }catch(err){
+    } catch (err) {
         return err;
     }
 }
@@ -107,8 +109,10 @@ export const isAlreadyBooked = async (token:string, hotelId:string) => {
     });
 }
 
-export const searchListings = async (query:any) => {
+export const searchListings = async (query:hotelQuery) => {
+    
     try{
+        console.log("query", query);
        return await axios.post(`${process.env.REACT_APP_Server_API}/search-listings`, query);
     }catch(err){
         return err;

@@ -1,8 +1,9 @@
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addHotel } from "../actions/hotel";
-import { useSelector } from "react-redux";
+import { userObject } from "../types/global";
 import HotelForm from "../components/forms/HotelForm";
 
 function NewHotel(){
@@ -22,7 +23,7 @@ function NewHotel(){
 
     const {title, content, image, location, price} = values;
     
-    const {auth} = useSelector((state:any) => ({...state}));
+    const {auth} = useSelector((state:userObject) => ({...state}));
     
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -46,6 +47,7 @@ function NewHotel(){
 
             toast.success('New hotel is posted');
             document.querySelector('form')?.reset();
+            
         }catch(error:any){
             console.log(error);
             toast.error(error.response.data);

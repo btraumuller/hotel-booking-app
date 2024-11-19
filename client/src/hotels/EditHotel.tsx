@@ -2,12 +2,13 @@ import {useState, useEffect, useRef} from 'react';
 import {toast} from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { loadSellerHotel, updateHotel } from '../actions/hotel';
+import { userObject } from '../types/global';
 import HotelForm from "../components/forms/HotelForm";
 
 
 
 export default function EditHotel({match}:any){
-    const {auth} = useSelector((state:any) => ({...state}));
+    const {auth} = useSelector((state:userObject) => ({...state}));
     const [values, setValues] = useState({
         title: "",
         content: "",
