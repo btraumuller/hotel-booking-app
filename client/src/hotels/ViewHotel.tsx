@@ -5,7 +5,8 @@ import { diffDays } from "../actions/hotel";
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import { userObject } from "../types/global";
-export default function ViewHotel({ match}: any) {
+import { matchParams } from "../types/global";
+export default function ViewHotel({match}: matchParams) {
     const history = useHistory();
     const [hotel, setHotel] = useState({
         title: "",

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { hotelQuery } from '../types/hotel';
 
-export const addHotel = async (token: string, hotel:any): Promise<any> => {
+export const addHotel = async (token: string, hotel:any)=> {
     try {
         return await axios.post(`${process.env.REACT_APP_Server_API}/add-hotel`, hotel, {
             headers: {

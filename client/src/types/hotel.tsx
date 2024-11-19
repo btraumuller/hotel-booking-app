@@ -1,3 +1,12 @@
+export type hotelFormValues = {
+    title: string,
+    content: string,
+    location: string,
+    price: string,
+    from: string,
+    to: string,
+    bed: string
+}
 export type hotelFormType = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -13,6 +22,7 @@ export type hotelFormType = {
     },
     setValues: (values: any) => void,
 }
+
 export type hotel = {
     _id: string,
     title: string,

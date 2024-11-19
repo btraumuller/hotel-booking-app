@@ -1,6 +1,8 @@
 export type matchParams = {
-    params:{
-        hotelid: string
+    match:{
+        params:{
+            hotelid: string
+        }
     }
 }
 export type currencyObject = {
