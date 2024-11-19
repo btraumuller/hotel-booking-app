@@ -10,7 +10,7 @@ export default function StripeSuccess(match:matchParams) {
     const {auth} = useSelector((state:userObject) => ({...state}));
     const history = useHistory();
     let init:React.MutableRefObject<boolean> = useRef(true);
-    
+
     useEffect(() => {
         if (init.current){
 
@@ -39,7 +39,6 @@ export default function StripeSuccess(match:matchParams) {
     return (
         <div className="container">
             <div className="d-flex justify-content-center p-5">
-                Test
                 <LoadingOutlined className="display-1 text-danger p-5"/>
             </div>
         </div>
