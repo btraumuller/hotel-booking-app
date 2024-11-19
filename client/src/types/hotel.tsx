@@ -52,3 +52,10 @@ export type hotelQuery = {
     date?: string | undefined,
     bed?: string | undefined
 }
+
+export type bookingHotel = {
+    _id: string,
+    hotel: hotel,
+    session: string,
+    orderedBy: string
+}

@@ -94,7 +94,9 @@ function DashboardSeller(){
                                 </div>
                             </div>
                             <div className="row mt-4">
-                                {
+                                {hotels.length === 0 ? 
+                                    <h4>No Hotels Posted</h4> 
+                                    :
                                     hotels.map((h:hotel) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={auth.user.name === h.postedBy.name? true: false} />))
                                 }
                             </div>
@@ -118,7 +120,6 @@ function DashboardSeller(){
                                     </p>
                                 </div>
                             </div>
-                            <p>Dashboard Page</p>
                         </div>
                     )
                 }

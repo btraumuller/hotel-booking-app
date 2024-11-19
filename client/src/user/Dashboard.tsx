@@ -6,19 +6,26 @@ import { userObject } from "../types/global";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import BookingCard from "../components/cards/BookingCard";
+import { toast } from "react-toastify";
+import { bookingHotel } from "../types/hotel";
 
 function Dashboard(){
     
     const {auth} = useSelector((state:userObject) => ({...state}));
-    const [booking, setBooking] = useState([]);
+    const [booking, setBooking] = useState<bookingHotel[]>([]);
     
     useEffect(() => {
-        userHotelBookings(auth.token).then((res:any) => {
+
+        userHotelBookings(auth.token).then((res: any) => {
             if (!res) {
                 throw new Error('Load Booking Failed');
             }
-            setBooking(res.data);
+            setBooking(res.data) 
+        }).catch((error:any) => {
+            console.log(error);
+            toast.error('Load Booking Failed');
         });
+
     },[auth.token]);
 
     return (
@@ -40,9 +47,12 @@ function Dashboard(){
                         </div>
                     </div>
                     <div className="row mt-4">
-                        {booking.map((b:any) =>(
-                            <BookingCard key={b._id} h={b.hotel} session={b.session} orderedBy={b.orderedBy} />
-                        ))}
+                        {booking.length === 0 ? 
+                            <h4>No bookings created</h4> :
+                            booking.map((b:bookingHotel) =>(
+                                <BookingCard key={b._id} h={b.hotel} session={b.session} orderedBy={b.orderedBy} />
+                            ))
+                        }
                     </div>
                 </div>
             </div>
