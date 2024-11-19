@@ -52,9 +52,13 @@ export const getSessionId = async (token:string, hotelId:string) => {
 }
 
 export const stripeSuccessRequest = async (token:string, hotelId:string) => {
-    await axios.post(`${process.env.REACT_APP_Server_API}/stripe-success`, {hotelId}, {
-        headers:{
-            Authorization: `Bearer ${token}`
-        }
-    });
+    try{
+        return await axios.post(`${process.env.REACT_APP_Server_API}/stripe-success`, {hotelId}, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }
 }

@@ -19,7 +19,10 @@ export type hotel = {
     content: string,
     location: string,
     price: string,
-    postedBy: string,
+    postedBy: {
+        _id: string,
+        name: string,
+    },
     image: {
         url: string,
         public_id: string,

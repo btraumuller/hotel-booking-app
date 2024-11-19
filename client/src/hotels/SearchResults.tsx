@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import {searchListings} from "../actions/hotel";
-import { hotelQuery } from "../types/hotel";
+import { hotel, hotelArray, hotelQuery } from "../types/hotel";
 import Search from "../components/forms/Search";
 import queryString from "query-string";
 import SmallCard from "../components/cards/SmallCard";
 export default function SearchResults() {
-    const [hotels, setHotels] = useState([]);
+    const [hotels, setHotels] = useState<hotel[]>([]);
     useEffect(() => {
         const {location, date, bed} = queryString.parse(window.location.search);
 
@@ -15,10 +15,10 @@ export default function SearchResults() {
             bed: typeof bed === 'string' ? bed : ''
         };
 
-        searchListings(searchParams).then((res:any) => {
-            setHotels(res.data);
+        searchListings(searchParams).then((res) => {
+            setHotels((res as hotelArray).data);
         });
-        
+
     }, []);
     return (
         <div className="container">
@@ -29,7 +29,7 @@ export default function SearchResults() {
                 <Search />
             </div>
             <div className="row">
-                {hotels.map((h:any) => ( 
+                {hotels.map((h:hotel) => ( 
                     <SmallCard key={h._id} h={h} showViewMoreButton={true} owner={false} />
                 ))}
             </div>

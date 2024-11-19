@@ -3,6 +3,7 @@ import {toast} from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { loadSellerHotel, updateHotel } from '../actions/hotel';
 import { userObject } from '../types/global';
+import { hotel } from '../types/hotel';
 import HotelForm from "../components/forms/HotelForm";
 
 

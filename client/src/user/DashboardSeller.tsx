@@ -9,12 +9,13 @@ import { userObject } from '../types/global';
 import SmallCard from "../components/cards/SmallCard";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
+import { hotel, hotelArray } from '../types/hotel';
 
 function DashboardSeller(){
 
     const {auth} = useSelector((state:userObject) => ({...state}));
     const [loading, setLoading] = useState(false);
-    const [hotels, setHotels] = useState([]);
+    const [hotels, setHotels] = useState<hotel[]>([]);
     let connectedUser = auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled? true : false;
     
     const handleClick = async () => {
@@ -36,14 +37,14 @@ function DashboardSeller(){
         
         if (!window.confirm('Are you sure you want to delete this hotel?')) return;
 
-        deleteHotel(auth.token, hotelId).then((res:any) => {
+        deleteHotel(auth.token, hotelId).then((res) => {
             
             if (!res) {
                 throw new Error('Hotel delete failed');
             }
 
             toast.success('Hotel Deleted');
-            setHotels(res.data);
+            setHotels((res as hotelArray).data);
 
         }).catch((error:any) => {
 
@@ -56,11 +57,11 @@ function DashboardSeller(){
     useEffect(() => {
         const loadSellers = async () => {
             try{
-                sellerHotels(auth.token).then((res:any) =>{
+                sellerHotels(auth.token).then((res) =>{
                     if (!res) {
                         throw new Error('Load Sellers Hotel Failed');
                     }
-                    setHotels(res.data);
+                    setHotels((res as hotelArray).data);
                 });
                 
             }catch(error){
@@ -94,7 +95,7 @@ function DashboardSeller(){
                             </div>
                             <div className="row mt-4">
                                 {
-                                    hotels.map((h:any) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={auth.user.name === h.postedBy.name? true: false} />))
+                                    hotels.map((h:hotel) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={auth.user.name === h.postedBy.name? true: false} />))
                                 }
                             </div>
                         </div>
