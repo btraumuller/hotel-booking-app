@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import {searchListings} from "../actions/hotel";
-import { hotel, hotelArray, hotelQuery } from "../types/hotel";
+import { hotel, hotelResponse, hotelQuery } from "../types/hotel";
 import Search from "../components/forms/Search";
 import queryString from "query-string";
 import SmallCard from "../components/cards/SmallCard";
@@ -16,7 +16,7 @@ export default function SearchResults() {
         };
 
         searchListings(searchParams).then((res) => {
-            setHotels((res as hotelArray).data);
+            setHotels((res as hotelResponse).data);
         });
 
     }, []);

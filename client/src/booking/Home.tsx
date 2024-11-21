@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SmallCard from "../components/cards/SmallCard";
 import Search from "../components/forms/Search";
 import { allHotels } from "../actions/hotel";
-import { hotel, hotelArray } from "../types/hotel";
+import { hotel, hotelResponse } from "../types/hotel";
 function Home() {
    
     const [hotels, setHotels] = useState<hotel[]>([]);
@@ -20,7 +20,7 @@ function Home() {
 
           setLoading(false);
 
-          return setHotels((res as hotelArray).data);
+          return setHotels((res as hotelResponse).data);
 
         }).catch((error:any) => {
           console.log("Error", error.message);

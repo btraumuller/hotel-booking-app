@@ -43,9 +43,13 @@ export type hotel = {
     bed: string
 }
 
-export type hotelArray = {
+export type hotelResponse = {
     data: hotel[]
 };
+
+export type hotelFormArray = {
+    data: hotelFormValues[]
+}
 
 export type hotelQuery = { 
     location?: string | undefined,
