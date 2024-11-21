@@ -22,8 +22,8 @@ function Home() {
 
           return setHotels((res as hotelArray).data);
 
-        }).catch((err:any) => {
-          console.log("Error", err.message);
+        }).catch((error:any) => {
+          console.log("Error", error.message);
           setLoading(false);
         });
 

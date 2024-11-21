@@ -34,9 +34,9 @@ function Register() {
 
         history.push("/login");
 
-      }catch (err:any){
-        if (err.response.status === 400){
-          toast.error(err.response.data);
+      }catch (error:any){
+        if (error.response.status === 400){
+          toast.error(error.response.data);
           return undefined;
         }
       }
