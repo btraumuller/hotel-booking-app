@@ -6,39 +6,53 @@ import { hotel, hotelArray } from "../types/hotel";
 function Home() {
    
     const [hotels, setHotels] = useState<hotel[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-      try{
 
-        allHotels().then((res) =>{
+        setLoading(true);
+
+        allHotels().then((res) => {
+          
+          if (!res) {
+            throw new Error('Load Sellers Hotel Failed');
+          }
+
+          setLoading(false);
+
           return setHotels((res as hotelArray).data);
+
+        }).catch((err:any) => {
+          console.log("Error", err.message);
+          setLoading(false);
         });
 
-      }catch(err){
-        console.log(err);
-      }
     }, []);
 
-    return (
-
-      <>
-        <div className="container-fluid h1 p-5 text-center">
-          <h1>All Hotels</h1>
-        </div>
-        <div className="container-xl">
-          <br />
-          <Search />
-        </div>
-        <div className="container-xl">
-          {hotels.length === 0 ? 
-            (<h2 className="text-center">No hotels found</h2>) 
-            : 
-            hotels.map((h:hotel) => (<SmallCard key={h._id} h={h} showViewMoreButton={true}  /> ))
-          }
-          
-        </div>
-      </>
-    );
-  }
+      return (
+      
+        <>
+          <div className="container-fluid h1 p-5 text-center">
+            <h1>All Hotels</h1>
+          </div>
+          <div className="container-xl">
+            <br />
+            <Search />
+          </div>
+          <div className="container-xl">
+            {hotels?
+              hotels.length === 0 ? 
+                (<h2 className="text-center">
+                  {loading ? 'Loading...' : 'No hotels found'}
+                </h2>) 
+                : 
+                hotels.map((h:hotel) => (<SmallCard key={h._id} h={h} showViewMoreButton={true}  /> ))
+              : 
+              (<h2 className="text-center">There is an issue with the server. Please try again later.</h2>)               
+            }
+          </div>
+        </>
+      );
+}   
 
 export default Home;
