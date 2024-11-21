@@ -5,11 +5,11 @@ import {HomeOutlined} from '@ant-design/icons'
 import {toast} from 'react-toastify';
 import { deleteHotel, sellerHotels } from '../actions/hotel';
 import { createConnectAccount } from '../actions/stripe';
-import { userObject } from '../types/global';
+import { errorObject, userObject } from '../types/global';
 import SmallCard from "../components/cards/SmallCard";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
-import { hotel, hotelArray } from '../types/hotel';
+import { hotel, hotelResponse } from '../types/hotel';
 
 function DashboardSeller(){
 
@@ -22,7 +22,7 @@ function DashboardSeller(){
         setLoading(true);
         try{
             
-            let res:any = createConnectAccount(auth.token);
+            let res:any = await createConnectAccount(auth.token);
 
             window.location.href = res.data;
             
@@ -44,32 +44,27 @@ function DashboardSeller(){
             }
 
             toast.success('Hotel Deleted');
-            setHotels((res as hotelArray).data);
+            setHotels((res as hotelResponse).data);
 
-        }).catch((error:any) => {
-
-            console.log(error);
+        }).catch((error:errorObject) => {
+            console.log("Error", error.message);
             toast.error('Hotel Delete Failed');
-
         });
     }
 
     useEffect(() => {
-        const loadSellers = async () => {
-            try{
-                sellerHotels(auth.token).then((res) =>{
-                    if (!res) {
-                        throw new Error('Load Sellers Hotel Failed');
-                    }
-                    setHotels((res as hotelArray).data);
-                });
-                
-            }catch(error){
-                console.log(error);
+
+        sellerHotels(auth.token).then((res) =>{
+            
+            if (!res) {
+                throw new Error('Load Sellers Hotel Failed');
             }
-        }
-        
-        loadSellers();
+
+            setHotels((res as hotelResponse).data);
+
+        }).catch((error:errorObject) =>{
+            console.log("Error", error.message);
+        });
 
     }, [auth.token]);
     
@@ -94,10 +89,13 @@ function DashboardSeller(){
                                 </div>
                             </div>
                             <div className="row mt-4">
-                                {hotels.length === 0 ? 
-                                    <h4>No Hotels Posted</h4> 
+                                {hotels?
+                                    hotels.length === 0 ? 
+                                        <h4>No Hotels Posted</h4> 
+                                        :
+                                        hotels.map((h:hotel) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={auth.user.name === h.postedBy.name? true: false} />))
                                     :
-                                    hotels.map((h:hotel) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={auth.user.name === h.postedBy.name? true: false} />))
+                                    <h4>There is an issue with the server. Please try again later.</h4>
                                 }
                             </div>
                         </div>

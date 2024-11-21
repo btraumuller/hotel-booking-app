@@ -26,3 +26,6 @@ export interface userObject {
         }
     }
 }
+export type errorObject = {
+    message: string
+}
