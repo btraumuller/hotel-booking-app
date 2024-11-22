@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { userHotelBookings } from "../actions/hotel";
-import { userObject } from "../types/global";
+import { errorObject, userObject } from "../types/global";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import BookingCard from "../components/cards/BookingCard";
 import { toast } from "react-toastify";
-import { bookingHotel } from "../types/hotel";
+import { bookingHotel, bookingHotelResponse } from "../types/hotel";
 
 function Dashboard(){
     
@@ -16,13 +16,13 @@ function Dashboard(){
     
     useEffect(() => {
 
-        userHotelBookings(auth.token).then((res: any) => {
+        userHotelBookings(auth.token).then((res) => {
             if (!res) {
                 throw new Error('Load Booking Failed');
             }
-            setBooking(res.data) 
-        }).catch((error:any) => {
-            console.log(error);
+            setBooking((res as bookingHotelResponse).data); 
+        }).catch((error:errorObject) => {
+            console.log(error.message);
             toast.error('Load Booking Failed');
         });
 
@@ -47,11 +47,14 @@ function Dashboard(){
                         </div>
                     </div>
                     <div className="row mt-4">
-                        {booking.length === 0 ? 
-                            <h4>No bookings created</h4> :
-                            booking.map((b:bookingHotel) =>(
-                                <BookingCard key={b._id} h={b.hotel} session={b.session} orderedBy={b.orderedBy} />
-                            ))
+                        {booking?
+                            booking.length === 0 ? 
+                                <h4>No bookings created</h4> :
+                                booking.map((b:bookingHotel) =>(
+                                    <BookingCard key={b._id} h={b.hotel} session={b.session} orderedBy={b.orderedBy} />
+                                ))
+                            :
+                            <h4>There is an issue with the server. Please try again later.</h4>
                         }
                     </div>
                 </div>

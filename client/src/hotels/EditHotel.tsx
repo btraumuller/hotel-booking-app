@@ -2,10 +2,9 @@ import {useState, useEffect, useRef} from 'react';
 import {toast} from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { loadSellerHotel, updateHotel } from '../actions/hotel';
-import { matchParams, userObject } from '../types/global';
-import { hotel, hotelFormValues } from '../types/hotel';
+import { errorObject, matchParams, userObject } from '../types/global';
+import { hotelFormValues, valueResponse } from '../types/hotel';
 import HotelForm from "../components/forms/HotelForm";
-
 
 
 export default function EditHotel({match}:matchParams){
@@ -27,6 +26,7 @@ export default function EditHotel({match}:matchParams){
     const {title, content, location, price} = values;
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        
         e.preventDefault();
 
         let hotelData = new FormData();
@@ -41,7 +41,7 @@ export default function EditHotel({match}:matchParams){
 
         try{
             
-            let res:any = await updateHotel(auth.token, match.params.hotelid);
+            let res = await updateHotel(auth.token, match.params.hotelid);
             
             if (!res) {
                 throw new Error('Hotel update failed');
@@ -49,13 +49,12 @@ export default function EditHotel({match}:matchParams){
 
             console.log('HOTEL UPDATE RES',res);
 
-            toast.success(`${res.data.title} is updated`);
+            toast.success(`${(res as valueResponse).data.title} is updated`);
 
         }catch(error:any){
             console.log(error);
-            toast.error(error.response.data);
+            toast.error("Error", error.message);
         }
-        console.log(values);
     }
 
     const handleImageChange = (e: { target: { files: any[string]; }; }) => {
@@ -76,11 +75,17 @@ export default function EditHotel({match}:matchParams){
 
         if (init.current){
 
-            loadSellerHotel(auth.token, match.params.hotelid).then((res:any) => {
-                setValues({...values, ...(res.data as hotelFormValues)});
+            loadSellerHotel(auth.token, match.params.hotelid).then((res) => {
+                
+                if (!res){
+                    throw new Error('Load Seller Hotel Failed');
+                }
+
+                setValues({...values, ...(res as valueResponse).data});
                 setPreview(`${process.env.REACT_APP_Server_API}/hotel/image/${match.params.hotelid}`);
-            }).catch((error:any) => {
-                console.log(error);
+
+            }).catch((error:errorObject) => {
+                console.log("Error", error.message);
             });
 
             init.current = false;
