@@ -1,3 +1,5 @@
+import { FormEvent } from "react"
+
 export type registerType = {
     name: string,
     email: string,
@@ -10,7 +12,7 @@ export type registerProps = {
     setEmail: (email:string) => void,
     password: string,
     setPassword: (password:string) => void,
-    handleSubmit: (e:React.MouseEvent<HTMLButtonElement>) => void
+    handleSubmit: (e:React.FormEvent<HTMLFormElement>) => void
 }
 export type ReturnPromise = {
     "ok": boolean,
@@ -29,7 +31,7 @@ export type LoginProps = {
     setEmail: (email:string) => void,
     password: string,
     setPassword: (password:string) => void,
-    handleSubmit: (e:React.MouseEvent<HTMLButtonElement>) => void
+    handleSubmit: (e:React.FormEvent<HTMLFormElement>) => void
 }
 export type LoginUserData = {
     token: string,
