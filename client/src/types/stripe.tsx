@@ -1,17 +1,17 @@
-export type paymentSuccess = {
+export type PaymentSuccess = {
     data:{
         success: boolean,
     }
 }
-export type paymentSettingResponse = {
+export type PaymentSettingResponse = {
     data:{
         url: string,
     }
 }
-export type accountStatusResponse = {
+export type AccountStatusResponse = {
     data:{}
 }
-export type connectStripeResponse = {
+export type ConnectStripeResponse = {
     data:{
         url: string,
     }

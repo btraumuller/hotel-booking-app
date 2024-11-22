@@ -10,26 +10,26 @@ export type registerProps = {
     setEmail: (email:string) => void,
     password: string,
     setPassword: (password:string) => void,
-    handleSubmit: (e:any) => void
+    handleSubmit: (e:React.MouseEvent<HTMLButtonElement>) => void
 }
-export type returnPromise = {
+export type ReturnPromise = {
     "ok": boolean,
 }
-export type loginUser = {
+export type LoginUser = {
     email: string,
     password: string
 }
 
-export type nextType = {
+export type NextType = {
     (user:any):void
 }
 
-export type loginProps = {
+export type LoginProps = {
     email: string,
     setEmail: (email:string) => void,
     password: string,
     setPassword: (password:string) => void,
-    handleSubmit: (e:any) => void
+    handleSubmit: (e:React.MouseEvent<HTMLButtonElement>) => void
 }
 export type LoginUserData = {
     token: string,

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { currencyObject } from '../types/global';
+import { CurrencyObject } from '../types/global';
 export const createConnectAccount = async (token:string) => {
     try{
         return await axios.post(`${process.env.REACT_APP_Server_API}/create-connect-account`, {}, {
@@ -24,7 +24,7 @@ export const getAccountStatus = async (token:string) => {
     }
 }
 
-export const currencyFormatter = (data: currencyObject) => {
+export const currencyFormatter = (data: CurrencyObject) => {
     return (data.amount/100).toLocaleString(data.currency, {
         style: 'currency',
         currency: data.currency

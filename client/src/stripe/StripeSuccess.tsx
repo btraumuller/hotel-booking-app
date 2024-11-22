@@ -4,13 +4,13 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import {LoadingOutlined} from '@ant-design/icons';
 import { stripeSuccessRequest } from "../actions/stripe";
-import { matchParams } from "../types/global";
-import { userObject } from "../types/global";
-import { paymentSuccess } from "../types/stripe";
+import { MatchParams } from "../types/global";
+import { UserObject } from "../types/global";
+import { PaymentSuccess } from "../types/stripe";
 
 
-export default function StripeSuccess({match}:matchParams) {
-    const {auth} = useSelector((state:userObject) => ({...state}));
+export default function StripeSuccess({match}:MatchParams) {
+    const {auth} = useSelector((state:UserObject) => ({...state}));
     const history = useHistory();
     let init:React.MutableRefObject<boolean> = useRef(true);
 
@@ -19,7 +19,7 @@ export default function StripeSuccess({match}:matchParams) {
 
             stripeSuccessRequest(auth.token, match.params.hotelid).then((res) => {
 
-                if ((res as paymentSuccess).data.success){
+                if ((res as PaymentSuccess).data.success){
                     history.push('/dashboard');
                     toast.success('Payment Success. Hotel booking is confirmed');
                 }else{

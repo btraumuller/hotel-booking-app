@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { userHotelBookings } from "../actions/hotel";
-import { errorObject, userObject } from "../types/global";
+import { ErrorObject, UserObject } from "../types/global";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import BookingCard from "../components/cards/BookingCard";
@@ -11,7 +11,7 @@ import { BookingHotel, BookingHotelResponse } from "../types/hotel";
 
 function Dashboard(){
     
-    const {auth} = useSelector((state:userObject) => ({...state}));
+    const {auth} = useSelector((state:UserObject) => ({...state}));
     const [booking, setBooking] = useState<BookingHotel[]>([]);
     
     useEffect(() => {
@@ -21,7 +21,7 @@ function Dashboard(){
                 throw new Error('Load Booking Failed');
             }
             setBooking((res as BookingHotelResponse).data); 
-        }).catch((error:errorObject) => {
+        }).catch((error:ErrorObject) => {
             console.log(error.message);
             toast.error('Load Booking Failed');
         });

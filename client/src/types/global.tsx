@@ -1,15 +1,15 @@
-export type matchParams = {
+export type MatchParams = {
     match:{
         params:{
             hotelid: string
         }
     }
 }
-export type currencyObject = {
+export type CurrencyObject = {
     amount: number,
     currency: string
 }
-export interface userObject {
+export interface UserObject {
     auth:{
         token: string,
         user: {
@@ -26,6 +26,6 @@ export interface userObject {
         }
     }
 }
-export type errorObject = {
+export type ErrorObject = {
     message: string
 }

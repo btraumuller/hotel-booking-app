@@ -1,6 +1,6 @@
 import axios from "axios";
-import { registerType, loginUser, nextType } from "../types/auth";
-import { userObject } from "../types/global";
+import { registerType, LoginUser, NextType } from "../types/auth";
+import { UserObject } from "../types/global";
 
 
 export const register = async (user:registerType) => {
@@ -11,7 +11,7 @@ export const register = async (user:registerType) => {
     }
 }
 
-export const login = async (user:loginUser) => {
+export const login = async (user:LoginUser) => {
     try{
       return await axios.post(`${process.env.REACT_APP_Server_API}/login`, user);
     }catch(err){
@@ -20,7 +20,7 @@ export const login = async (user:loginUser) => {
     
 }
 
-export const updateUserInLocalStorage = (user:userObject, next:nextType) => {
+export const updateUserInLocalStorage = (user:UserObject, next:NextType) => {
     if (window.localStorage.getItem('auth')){
         let auth = JSON.parse(window.localStorage.getItem('auth') || '{}');
         auth.user = user;

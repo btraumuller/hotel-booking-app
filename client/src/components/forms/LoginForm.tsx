@@ -1,6 +1,6 @@
-import { loginProps } from "../../types/auth";
+import { LoginProps } from "../../types/auth";
 
-function LoginForm({handleSubmit, email, setEmail, password, setPassword}:loginProps){
+function LoginForm({handleSubmit, email, setEmail, password, setPassword}:LoginProps){
     
     return(
         <form onSubmit={handleSubmit} className="mt-3">

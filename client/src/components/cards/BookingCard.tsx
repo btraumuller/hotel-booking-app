@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { currencyFormatter } from "../../actions/stripe"
 import { diffDays } from "../../actions/hotel"
-import { hotel } from "../../types/hotel";
+import { Hotel } from "../../types/hotel";
 import OrderModal from "../modals/OrderModal";
-export default function BookingCard({ h, session, orderedBy}: { h:hotel, session:string, orderedBy:string }){
+export default function BookingCard({ h, session, orderedBy}: { h:Hotel, session:string, orderedBy:string }){
     const [showModal, setShowModal] = useState(false);
     return(
         <div className="card mb-3">

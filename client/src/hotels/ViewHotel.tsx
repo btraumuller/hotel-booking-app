@@ -4,9 +4,9 @@ import axios from "axios";
 import { diffDays } from "../actions/hotel";
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
-import { userObject } from "../types/global";
-import { matchParams } from "../types/global";
-export default function ViewHotel({match}: matchParams) {
+import { UserObject } from "../types/global";
+import { MatchParams } from "../types/global";
+export default function ViewHotel({match}: MatchParams) {
     const history = useHistory();
     const [hotel, setHotel] = useState({
         title: "",
@@ -22,7 +22,7 @@ export default function ViewHotel({match}: matchParams) {
     });
     const [loading, setLoading] = useState(false);
     const [alreadyBooked, setAlreadyBooked] = useState(false);
-    const {auth} = useSelector((state:userObject) => ({...state}));
+    const {auth} = useSelector((state:UserObject) => ({...state}));
     const [preview, setPreview]=  useState('https://via.placeholder.com/100x100.png?text=PREVIEW');
 
     let init: React.MutableRefObject<boolean> = useRef(true);

@@ -5,14 +5,14 @@ import {Card, Avatar, Badge} from "antd";
 import {SettingOutlined} from "@ant-design/icons";
 import { currencyFormatter, payoutSetting, getAccountStatus } from "../actions/stripe";
 import { diffDays } from "../actions/hotel";
-import { userObject } from "../types/global";
-import {accountStatusResponse, paymentSettingResponse} from "../types/stripe";
+import { UserObject } from "../types/global";
+import {AccountStatusResponse, PaymentSettingResponse} from "../types/stripe";
 const {Ribbon} = Badge;
 
 function ConnectNav() {
     const [balance, setBalance] = useState<{ pending?: { currency: string, amount: number }[] }>({});
     const [loading, setLoading] = useState(false);
-    const {auth} = useSelector((state:userObject) => ({...state}));
+    const {auth} = useSelector((state:UserObject) => ({...state}));
     const {user} = auth;
 
     const handlePayoutSettings = async () => {
@@ -24,7 +24,7 @@ function ConnectNav() {
                 throw new Error('Unable to access settings');
             }
             
-            window.location.href=(res as paymentSettingResponse).data.url;
+            window.location.href=(res as PaymentSettingResponse).data.url;
 
             setLoading(false);
         }catch(error:any){
@@ -40,7 +40,7 @@ function ConnectNav() {
                 if (!balance){
                     throw new Error('Balance is not available');
                 }
-                setBalance((balance as accountStatusResponse).data);
+                setBalance((balance as AccountStatusResponse).data);
             }).catch((error:any) => {
                 console.log(error);
             }) ;

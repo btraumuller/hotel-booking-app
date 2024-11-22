@@ -5,17 +5,17 @@ import {HomeOutlined} from '@ant-design/icons'
 import {toast} from 'react-toastify';
 import { deleteHotel, sellerHotels } from '../actions/hotel';
 import { createConnectAccount } from '../actions/stripe';
-import { errorObject, userObject } from '../types/global';
+import { ErrorObject, UserObject } from '../types/global';
 import { Hotel, HotelResponse } from '../types/hotel';
 import SmallCard from "../components/cards/SmallCard";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
-import { connectStripeResponse } from '../types/stripe';
+import { ConnectStripeResponse } from '../types/stripe';
 
 
 function DashboardSeller(){
 
-    const {auth} = useSelector((state:userObject) => ({...state}));
+    const {auth} = useSelector((state:UserObject) => ({...state}));
     const [loading, setLoading] = useState(false);
     const [hotels, setHotels] = useState<Hotel[]>([]);
     let connectedUser = auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled? true : false;
@@ -26,7 +26,7 @@ function DashboardSeller(){
             
             let res = await createConnectAccount(auth.token);
 
-            window.location.href = (res as connectStripeResponse).data.url;
+            window.location.href = (res as ConnectStripeResponse).data.url;
             
         }catch (error){
             console.log(error);
@@ -48,7 +48,7 @@ function DashboardSeller(){
             toast.success('Hotel Deleted');
             setHotels((res as HotelResponse).data);
 
-        }).catch((error:errorObject) => {
+        }).catch((error:ErrorObject) => {
             console.log("Error", error.message);
             toast.error('Hotel Delete Failed');
         });
@@ -64,7 +64,7 @@ function DashboardSeller(){
 
             setHotels((res as HotelResponse).data);
 
-        }).catch((error:errorObject) =>{
+        }).catch((error:ErrorObject) =>{
             console.log("Error", error.message);
         });
 

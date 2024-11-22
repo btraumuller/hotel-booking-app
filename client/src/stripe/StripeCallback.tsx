@@ -4,10 +4,10 @@ import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserInLocalStorage } from '../actions/auth';
 import { useHistory } from 'react-router-dom';
-import { userObject } from '../types/global';
+import { UserObject } from '../types/global';
 
 const StripeCallback = () => {
-    const {auth} = useSelector((state:userObject) => ({...state}));
+    const {auth} = useSelector((state:UserObject) => ({...state}));
     const dispatch = useDispatch();
     const history = useHistory();
     let init: React.MutableRefObject<boolean> = useRef(true);
