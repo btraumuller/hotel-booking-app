@@ -20,6 +20,10 @@ function ConnectNav() {
         try{
             let res = await payoutSetting(auth.token);
 
+            if (!res){
+                throw new Error('Unable to access settings');
+            }
+            
             window.location.href=(res as paymentSettingResponse).data.url;
 
             setLoading(false);
@@ -33,6 +37,9 @@ function ConnectNav() {
     useEffect(() => {
 
             getAccountStatus(auth.token).then((balance) => {
+                if (!balance){
+                    throw new Error('Balance is not available');
+                }
                 setBalance((balance as accountStatusResponse).data);
             }).catch((error:any) => {
                 console.log(error);

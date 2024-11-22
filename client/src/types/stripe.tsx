@@ -11,3 +11,8 @@ export type paymentSettingResponse = {
 export type accountStatusResponse = {
     data:{}
 }
+export type connectStripeResponse = {
+    data:{
+        url: string,
+    }
+}

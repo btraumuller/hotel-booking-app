@@ -6,10 +6,12 @@ import {toast} from 'react-toastify';
 import { deleteHotel, sellerHotels } from '../actions/hotel';
 import { createConnectAccount } from '../actions/stripe';
 import { errorObject, userObject } from '../types/global';
+import { hotel, hotelResponse } from '../types/hotel';
 import SmallCard from "../components/cards/SmallCard";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
-import { hotel, hotelResponse } from '../types/hotel';
+import { connectStripeResponse } from '../types/stripe';
+
 
 function DashboardSeller(){
 
@@ -22,9 +24,9 @@ function DashboardSeller(){
         setLoading(true);
         try{
             
-            let res:any = await createConnectAccount(auth.token);
+            let res = await createConnectAccount(auth.token);
 
-            window.location.href = res.data;
+            window.location.href = (res as connectStripeResponse).data.url;
             
         }catch (error){
             console.log(error);
