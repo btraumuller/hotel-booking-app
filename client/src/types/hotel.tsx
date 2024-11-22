@@ -1,4 +1,4 @@
-export type hotelFormValues = {
+export type HotelFormValues = {
     title: string,
     content: string,
     location: string,
@@ -7,15 +7,15 @@ export type hotelFormValues = {
     to: string,
     bed: string
 }
-export type hotelFormType = {
+export type HotelFormType = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    values: hotelFormValues,
+    values: HotelFormValues,
     setValues: (values: any) => void,
 }
 
-export type hotel = {
+export type Hotel = {
     _id: string,
     title: string,
     content: string,
@@ -35,30 +35,30 @@ export type hotel = {
     bed: string
 }
 
-export type valueResponse = {
-    data: hotelFormValues
+export type ValueResponse = {
+    data: HotelFormValues
 }
-export type hotelResponse = {
-    data: hotel[]
+export type HotelResponse = {
+    data: Hotel[]
 };
 
-export type bookingHotelResponse = {
-    data: bookingHotel[]
+export type BookingHotelResponse = {
+    data: BookingHotel[]
 }
 
-export type hotelFormArray = {
-    data: hotelFormValues[]
+export type HotelFormArray = {
+    data: HotelFormValues[]
 }
 
-export type hotelQuery = { 
+export type HotelQuery = { 
     location?: string | undefined,
     date?: string | undefined,
     bed?: string | undefined
 }
 
-export type bookingHotel = {
+export type BookingHotel = {
     _id: string,
-    hotel: hotel,
+    hotel: Hotel,
     session: string,
     orderedBy: string
 }

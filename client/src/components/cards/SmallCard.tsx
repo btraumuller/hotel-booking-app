@@ -2,8 +2,8 @@ import { currencyFormatter } from "../../actions/stripe"
 import { diffDays } from "../../actions/hotel"
 import { useHistory, Link } from "react-router-dom"
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
-import { hotel } from "../../types/hotel"
-export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDelete}: { h:hotel, owner?:boolean, showViewMoreButton:boolean, handleHotelDelete?: (id: string) => void }){
+import { Hotel } from "../../types/hotel"
+export default function SmallCard({ h, owner, showViewMoreButton, handleHotelDelete}: { h:Hotel, owner?:boolean, showViewMoreButton:boolean, handleHotelDelete?: (id: string) => void }){
     const history = useHistory()
     return(
         <div className="card mb-3">

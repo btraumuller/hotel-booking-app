@@ -1,10 +1,10 @@
 import { DatePicker, Select } from 'antd';
-import { hotelFormType } from '../../types/hotel';
+import { HotelFormType } from '../../types/hotel';
 import moment from 'moment';
 const {Option} = Select;
 
 
-export function hotelForm({handleSubmit, handleChange, handleImageChange, values, setValues}:hotelFormType) {
+export function hotelForm({handleSubmit, handleChange, handleImageChange, values, setValues}:HotelFormType) {
     
     const {title, content, price, location, bed, to, from} = values;
     

@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import SmallCard from "../components/cards/SmallCard";
 import Search from "../components/forms/Search";
 import { allHotels } from "../actions/hotel";
-import { hotel, hotelResponse } from "../types/hotel";
+import { Hotel, HotelResponse } from "../types/hotel";
 function Home() {
    
-    const [hotels, setHotels] = useState<hotel[]>([]);
+    const [hotels, setHotels] = useState<Hotel[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function Home() {
 
           setLoading(false);
 
-          return setHotels((res as hotelResponse).data);
+          return setHotels((res as HotelResponse).data);
 
         }).catch((error:any) => {
           console.log("Error", error.message);
@@ -46,7 +46,7 @@ function Home() {
                   {loading ? 'Loading...' : 'No hotels found'}
                 </h2>) 
                 : 
-                hotels.map((h:hotel) => (<SmallCard key={h._id} h={h} showViewMoreButton={true}  /> ))
+                hotels.map((h:Hotel) => (<SmallCard key={h._id} h={h} showViewMoreButton={true}  /> ))
               : 
               (<h2 className="text-center">There is an issue with the server. Please try again later.</h2>)               
             }

@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-import { hotelQuery } from '../types/hotel';
+import { HotelQuery } from '../types/hotel';
 
 export const addHotel = async (token: string, hotel:any)=> {
     try {
@@ -109,7 +109,7 @@ export const isAlreadyBooked = async (token:string, hotelId:string) => {
     });
 }
 
-export const searchListings = async (query:hotelQuery) => {
+export const searchListings = async (query:HotelQuery) => {
     
     try{
         console.log("query", query);

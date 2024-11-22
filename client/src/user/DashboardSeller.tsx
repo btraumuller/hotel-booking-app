@@ -6,7 +6,7 @@ import {toast} from 'react-toastify';
 import { deleteHotel, sellerHotels } from '../actions/hotel';
 import { createConnectAccount } from '../actions/stripe';
 import { errorObject, userObject } from '../types/global';
-import { hotel, hotelResponse } from '../types/hotel';
+import { Hotel, HotelResponse } from '../types/hotel';
 import SmallCard from "../components/cards/SmallCard";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
@@ -17,7 +17,7 @@ function DashboardSeller(){
 
     const {auth} = useSelector((state:userObject) => ({...state}));
     const [loading, setLoading] = useState(false);
-    const [hotels, setHotels] = useState<hotel[]>([]);
+    const [hotels, setHotels] = useState<Hotel[]>([]);
     let connectedUser = auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled? true : false;
     
     const handleClick = async () => {
@@ -46,7 +46,7 @@ function DashboardSeller(){
             }
 
             toast.success('Hotel Deleted');
-            setHotels((res as hotelResponse).data);
+            setHotels((res as HotelResponse).data);
 
         }).catch((error:errorObject) => {
             console.log("Error", error.message);
@@ -62,7 +62,7 @@ function DashboardSeller(){
                 throw new Error('Load Sellers Hotel Failed');
             }
 
-            setHotels((res as hotelResponse).data);
+            setHotels((res as HotelResponse).data);
 
         }).catch((error:errorObject) =>{
             console.log("Error", error.message);
@@ -95,7 +95,7 @@ function DashboardSeller(){
                                     hotels.length === 0 ? 
                                         <h4>No Hotels Posted</h4> 
                                         :
-                                        hotels.map((h:hotel) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={auth.user.name === h.postedBy.name? true: false} />))
+                                        hotels.map((h:Hotel) => (<SmallCard key={h._id} h={h} handleHotelDelete={handleHotelDelete} showViewMoreButton={false} owner={auth.user.name === h.postedBy.name? true: false} />))
                                     :
                                     <h4>There is an issue with the server. Please try again later.</h4>
                                 }

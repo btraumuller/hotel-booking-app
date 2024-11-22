@@ -3,13 +3,13 @@ import {toast} from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { loadSellerHotel, updateHotel } from '../actions/hotel';
 import { errorObject, matchParams, userObject } from '../types/global';
-import { hotelFormValues, valueResponse } from '../types/hotel';
+import { HotelFormValues, ValueResponse } from '../types/hotel';
 import HotelForm from "../components/forms/HotelForm";
 
 
 export default function EditHotel({match}:matchParams){
     const {auth} = useSelector((state:userObject) => ({...state}));
-    const [values, setValues] = useState<hotelFormValues>({
+    const [values, setValues] = useState<HotelFormValues>({
         title: "",
         content: "",
         location: "",
@@ -49,7 +49,7 @@ export default function EditHotel({match}:matchParams){
 
             console.log('HOTEL UPDATE RES',res);
 
-            toast.success(`${(res as valueResponse).data.title} is updated`);
+            toast.success(`${(res as ValueResponse).data.title} is updated`);
 
         }catch(error:any){
             console.log(error);
@@ -81,7 +81,7 @@ export default function EditHotel({match}:matchParams){
                     throw new Error('Load Seller Hotel Failed');
                 }
 
-                setValues({...values, ...(res as valueResponse).data});
+                setValues({...values, ...(res as ValueResponse).data});
                 setPreview(`${process.env.REACT_APP_Server_API}/hotel/image/${match.params.hotelid}`);
 
             }).catch((error:errorObject) => {
