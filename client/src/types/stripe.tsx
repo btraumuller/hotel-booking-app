@@ -3,3 +3,11 @@ export type paymentSuccess = {
         success: boolean,
     }
 }
+export type paymentSettingResponse = {
+    data:{
+        url: string,
+    }
+}
+export type accountStatusResponse = {
+    data:{}
+}

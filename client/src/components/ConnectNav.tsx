@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import {toast} from "react-toastify";
 import {Card, Avatar, Badge} from "antd";
 import {SettingOutlined} from "@ant-design/icons";
-import {toast} from "react-toastify";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { currencyFormatter } from "../actions/stripe";
+import { currencyFormatter, payoutSetting, getAccountStatus } from "../actions/stripe";
 import { diffDays } from "../actions/hotel";
 import { userObject } from "../types/global";
+import {accountStatusResponse, paymentSettingResponse} from "../types/stripe";
 const {Ribbon} = Badge;
 
 function ConnectNav() {
@@ -18,15 +18,13 @@ function ConnectNav() {
     const handlePayoutSettings = async () => {
         setLoading(true);
         try{
-            let res = await axios.get(`${process.env.REACT_APP_Server_API}/payout-settings`, {
-                headers:{
-                    Authorization: `Bearer ${auth.token}`
-                }
-            });
-            window.location.href=res.data.url;
+            let res = await payoutSetting(auth.token);
+
+            window.location.href=(res as paymentSettingResponse).data.url;
+
             setLoading(false);
-        }catch(error){
-            console.log(error);
+        }catch(error:any){
+            console.log("Error", error.message);
             toast.error('Unable to access settings. Try again.');
             setLoading(false);
         }
@@ -34,20 +32,11 @@ function ConnectNav() {
 
     useEffect(() => {
 
-        const getAccountBalance = async () => {
-            try{
-                let balance = await axios.post(`${process.env.REACT_APP_Server_API}/get-account-balance`, {}, {
-                    headers:{
-                        Authorization: `Bearer ${auth.token}`
-                    }
-                });
-                setBalance(balance.data);
-            }catch(error){
+            getAccountStatus(auth.token).then((balance) => {
+                setBalance((balance as accountStatusResponse).data);
+            }).catch((error:any) => {
                 console.log(error);
-            }  
-        }
-
-        getAccountBalance();
+            }) ;
 
     }, [auth.token]);
     
