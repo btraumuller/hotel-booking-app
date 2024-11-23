@@ -50,6 +50,16 @@ export type HotelFormArray = {
     data: HotelFormValues[]
 }
 
+export type GetHotelResponse = {
+    data: Hotel
+}
+
+export type IsAlreadyBookedResponse = {
+    data: {
+        ok: boolean
+    }
+}
+
 export type HotelQuery = { 
     location?: string | undefined,
     date?: string | undefined,

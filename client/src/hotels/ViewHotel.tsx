@@ -3,8 +3,10 @@ import { useHistory } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuth } from "../selectors/auth";
 import { diffDays, isAlreadyBooked, loadSellerHotel } from "../actions/hotel";
-import { MatchParams } from "../types/global";
 import { getSessionId } from "../actions/stripe";
+import { MatchParams } from "../types/global";
+import { GetHotelResponse, IsAlreadyBookedResponse } from "../types/hotel";
+import { StripeSessionIdResponse } from "../types/stripe";
 
 export default function ViewHotel({match}: MatchParams) {
     const history = useHistory();
@@ -31,8 +33,8 @@ export default function ViewHotel({match}: MatchParams) {
         
         if (init.current){
 
-            loadSellerHotel(auth.token, match.params.hotelid).then((res:any) => {
-                setHotel({...hotel, ...res.data});
+            loadSellerHotel(auth.token, match.params.hotelid).then((res) => {
+                setHotel({...hotel, ...(res as GetHotelResponse).data});
                 setPreview(`${process.env.REACT_APP_Server_API}/hotel/image/${match.params.hotelid}`);
             });
 
@@ -43,8 +45,8 @@ export default function ViewHotel({match}: MatchParams) {
 
     useEffect(() => {
         
-        isAlreadyBooked(auth.token, match.params.hotelid).then((res:any) =>{
-            setAlreadyBooked(res.data.ok);
+        isAlreadyBooked(auth.token, match.params.hotelid).then((res) =>{
+            setAlreadyBooked((res as IsAlreadyBookedResponse).data.ok);
         });
         
     }, [auth, match.params.hotelid]);
@@ -60,12 +62,12 @@ export default function ViewHotel({match}: MatchParams) {
         }
         
         try{
-            let res:any = await getSessionId(auth.token, match.params.hotelid);
+            let res = await getSessionId(auth.token, match.params.hotelid);
 
             const stripe = await loadStripe(process.env.REACT_APP_STRIPE_KEY as string);
 
             stripe?.redirectToCheckout({
-                sessionId: res.data.sessionId,
+                sessionId: (res as StripeSessionIdResponse).data.sessionId,
             })
             .then (result => console.log(result));
         }catch(err){

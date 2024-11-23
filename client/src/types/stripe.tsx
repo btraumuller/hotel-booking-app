@@ -16,3 +16,8 @@ export type ConnectStripeResponse = {
         url: string,
     }
 }
+export type StripeSessionIdResponse = {
+    data:{
+        sessionId: string
+    }
+}
