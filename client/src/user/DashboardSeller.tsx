@@ -1,21 +1,20 @@
 import {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
 import {HomeOutlined} from '@ant-design/icons'
 import {toast} from 'react-toastify';
+import { useAuth } from '../selectors/auth';
 import { deleteHotel, sellerHotels } from '../actions/hotel';
 import { createConnectAccount } from '../actions/stripe';
-import { ErrorObject, UserObject } from '../types/global';
+import { ErrorObject} from '../types/global';
 import { Hotel, HotelResponse } from '../types/hotel';
+import { ConnectStripeResponse } from '../types/stripe';
 import SmallCard from "../components/cards/SmallCard";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
-import { ConnectStripeResponse } from '../types/stripe';
-
 
 function DashboardSeller(){
 
-    const {auth} = useSelector((state:UserObject) => ({...state}));
+    const auth = useAuth();
     const [loading, setLoading] = useState(false);
     const [hotels, setHotels] = useState<Hotel[]>([]);
     let connectedUser = auth && auth.user && auth.user.stripe_seller && auth.user.stripe_seller.charges_enabled? true : false;

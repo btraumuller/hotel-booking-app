@@ -1,12 +1,9 @@
 import {Route, Redirect} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import { UserObject } from '../types/global';
-
+import { useAuth } from '../selectors/auth';
 // rest is a prop that contains all the props that are passed to the component
 const PrivateRoute = ({...rest}) => {
     
-    const {auth} = useSelector((state:UserObject) => ({...state}));
-
+    const auth = useAuth(); 
     return auth && auth.token ? <Route {...rest} /> : <Redirect to="/login" />;
 }
 

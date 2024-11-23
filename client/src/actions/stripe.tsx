@@ -24,6 +24,18 @@ export const getAccountStatus = async (token:string) => {
     }
 }
 
+export const getAccountBalance = async (token:string) => {
+    try{
+        return await axios.post(`${process.env.REACT_APP_Server_API}/get-account-balance`, {}, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }catch(err){
+        return err;
+    }
+}
+
 export const currencyFormatter = (data: CurrencyObject) => {
     return (data.amount/100).toLocaleString(data.currency, {
         style: 'currency',

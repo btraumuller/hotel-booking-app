@@ -1,8 +1,8 @@
+import { useDispatch } from "react-redux";
 import {Link} from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { UserObject } from "../types/global";
+import { useAuth } from "../selectors/auth";
 const TopNav = () => {
-  const {auth} = useSelector((state:UserObject) => ({...state}));
+  const auth = useAuth();
   const dispatch = useDispatch();
   const logout = () =>{
     dispatch({

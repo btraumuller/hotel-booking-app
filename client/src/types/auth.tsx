@@ -1,4 +1,4 @@
-import { FormEvent } from "react"
+import { UserObject } from "./global"
 
 export type registerType = {
     name: string,
@@ -23,7 +23,7 @@ export type LoginUser = {
 }
 
 export type NextType = {
-    (user:any):void
+    (user: UserObject): void
 }
 
 export type LoginProps = {
