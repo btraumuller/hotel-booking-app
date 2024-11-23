@@ -36,6 +36,8 @@ export default function ViewHotel({match}: MatchParams) {
             loadSellerHotel(auth.token, match.params.hotelid).then((res) => {
                 setHotel({...hotel, ...(res as GetHotelResponse).data});
                 setPreview(`${process.env.REACT_APP_Server_API}/hotel/image/${match.params.hotelid}`);
+            }).catch((error:any) => {
+                console.log(error);
             });
 
             init.current = false;
@@ -47,6 +49,8 @@ export default function ViewHotel({match}: MatchParams) {
         
         isAlreadyBooked(auth.token, match.params.hotelid).then((res) =>{
             setAlreadyBooked((res as IsAlreadyBookedResponse).data.ok);
+        }).catch((error:any) => {
+            console.log(error);
         });
         
     }, [auth, match.params.hotelid]);
