@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
+import queryString from "query-string";
 import {searchListings} from "../actions/hotel";
 import { Hotel, HotelResponse, HotelQuery } from "../types/hotel";
 import Search from "../components/forms/Search";
-import queryString from "query-string";
 import SmallCard from "../components/cards/SmallCard";
 export default function SearchResults() {
     const [hotels, setHotels] = useState<Hotel[]>([]);
     useEffect(() => {
+
         const {location, date, bed} = queryString.parse(window.location.search);
 
         let searchParams:HotelQuery = {
