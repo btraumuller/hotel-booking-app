@@ -1,9 +1,7 @@
-
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useAuth } from "../selectors/auth";
 import { addHotel } from "../actions/hotel";
-import { UserObject } from "../types/global";
 import HotelForm from "../components/forms/HotelForm";
 
 function NewHotel(){
@@ -23,7 +21,7 @@ function NewHotel(){
 
     const {title, content, image, location, price} = values;
     
-    const {auth} = useSelector((state:UserObject) => ({...state}));
+    const auth = useAuth();
     
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();

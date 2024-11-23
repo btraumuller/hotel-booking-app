@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { createSelector } from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
 import {Card, Avatar, Badge} from "antd";
 import {SettingOutlined} from "@ant-design/icons";
+import { useAuth } from "../selectors/auth";
 import { currencyFormatter, payoutSetting, getAccountBalance } from "../actions/stripe";
 import { diffDays } from "../actions/hotel";
-import { UserObject } from "../types/global";
-import { useAuth } from "../selectors/auth";
 import {AccountStatusResponse, PaymentSettingResponse} from "../types/stripe";
 const {Ribbon} = Badge;
 

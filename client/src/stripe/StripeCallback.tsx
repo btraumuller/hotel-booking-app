@@ -1,13 +1,13 @@
 import {LoadingOutlined} from '@ant-design/icons';
 import axios from 'axios';
 import { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../selectors/auth';
 import { updateUserInLocalStorage } from '../actions/auth';
 import { useHistory } from 'react-router-dom';
-import { UserObject } from '../types/global';
 
 const StripeCallback = () => {
-    const {auth} = useSelector((state:UserObject) => ({...state}));
+    const auth = useAuth();
     const dispatch = useDispatch();
     const history = useHistory();
     let init: React.MutableRefObject<boolean> = useRef(true);

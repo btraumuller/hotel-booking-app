@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import { useAuth } from "../selectors/auth";
 import { userHotelBookings } from "../actions/hotel";
-import { ErrorObject, UserObject } from "../types/global";
+import { ErrorObject} from "../types/global";
 import DasboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import BookingCard from "../components/cards/BookingCard";
@@ -11,7 +11,7 @@ import { BookingHotel, BookingHotelResponse } from "../types/hotel";
 
 function Dashboard(){
     
-    const {auth} = useSelector((state:UserObject) => ({...state}));
+    const auth = useAuth();
     const [booking, setBooking] = useState<BookingHotel[]>([]);
     
     useEffect(() => {

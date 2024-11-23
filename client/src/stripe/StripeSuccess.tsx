@@ -1,16 +1,15 @@
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../selectors/auth";
 import { toast } from "react-toastify";
 import {LoadingOutlined} from '@ant-design/icons';
 import { stripeSuccessRequest } from "../actions/stripe";
 import { MatchParams } from "../types/global";
-import { UserObject } from "../types/global";
 import { PaymentSuccess } from "../types/stripe";
 
 
 export default function StripeSuccess({match}:MatchParams) {
-    const {auth} = useSelector((state:UserObject) => ({...state}));
+    const auth = useAuth();
     const history = useHistory();
     let init:React.MutableRefObject<boolean> = useRef(true);
 
