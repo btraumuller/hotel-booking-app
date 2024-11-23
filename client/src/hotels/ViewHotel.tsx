@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuth } from "../selectors/auth";
-import axios from "axios";
-import { diffDays } from "../actions/hotel";
+import { diffDays, isAlreadyBooked, loadSellerHotel } from "../actions/hotel";
 import { MatchParams } from "../types/global";
+import { getSessionId } from "../actions/stripe";
 
 export default function ViewHotel({match}: MatchParams) {
     const history = useHistory();
@@ -28,49 +28,42 @@ export default function ViewHotel({match}: MatchParams) {
     let init: React.MutableRefObject<boolean> = useRef(true);
 
     useEffect(() => {
+        
         if (init.current){
-            const loadSellerHotels = async () => {
-                let res = await axios.get(`${process.env.REACT_APP_Server_API}/hotel/${match.params.hotelid}`);
+
+            loadSellerHotel(auth.token, match.params.hotelid).then((res:any) => {
                 setHotel({...hotel, ...res.data});
                 setPreview(`${process.env.REACT_APP_Server_API}/hotel/image/${match.params.hotelid}`);
-            }
-            loadSellerHotels();
+            });
+
             init.current = false;
         }
 
-    }, [match.params.hotelid, hotel]);
+    }, [match.params.hotelid, hotel, auth.token]);
+
     useEffect(() => {
-        if (auth && auth.token){
-            const isAlreadyBooked = async () => {
-                const res = await axios.get(`${process.env.REACT_APP_Server_API}/is-already-booked/${match.params.hotelid}`, {
-                    headers:{
-                        Authorization: `Bearer ${auth.token}`
-                    }
-                });
-                setAlreadyBooked(res.data.ok);
-            }
-            isAlreadyBooked();
-        }
+        
+        isAlreadyBooked(auth.token, match.params.hotelid).then((res:any) =>{
+            setAlreadyBooked(res.data.ok);
+        });
+        
     }, [auth, match.params.hotelid]);
 
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
+
+        e.preventDefault();
+
         setLoading(true);
+
         if (!auth) {
             history.push('/login')
         }
         
         try{
-            let res = await axios.post(`${process.env.REACT_APP_Server_API}/stripe-session-id`, {
-                hotelId: match.params.hotelid,
-            },{
-    
-                headers:{
-                    Authorization: `Bearer ${auth.token}`
-                }
-            });
+            let res:any = await getSessionId(auth.token, match.params.hotelid);
 
             const stripe = await loadStripe(process.env.REACT_APP_STRIPE_KEY as string);
+
             stripe?.redirectToCheckout({
                 sessionId: res.data.sessionId,
             })
